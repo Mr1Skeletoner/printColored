@@ -42,5 +42,5 @@ def printColored(endl, text, *format,):
            print(f"\033[{value}m{key}\033[0m")
     else:
         format_code = ";".join(formats[name] for name in format)
-        print(f"\033[{format_code}m{text}\033[0m", end=endl)
-printColored("form dict", "", "")
+        endlT = endl if endl != "" else None
+        print(f"\033[{format_code}m{text}\033[0m", end=endlT)
