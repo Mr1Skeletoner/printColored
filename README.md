@@ -2,11 +2,11 @@ Guide to using:
 
 first, import it like any other file if you use in another code (import it all and not only the function)
 
-import printColored as colors # shorten it so u dont have to type printColored.printColored() everytime
+import printColored
 
 now, to use the function,
 
-colors.printColored("endline", "text", *"formats")
+printColored.printColored("endline", "text", *"formats")
 
 endline is the last character at the end of the string, leave empty (without spaces) for new line
 
