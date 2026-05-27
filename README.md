@@ -20,4 +20,6 @@ printColored("form dict","","")
 
 trying to write the statement above on your own may fail because what i wrote has a secret character so just copy paste it
 
+UPD: js run the main file and it will print every format
+
 THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!
