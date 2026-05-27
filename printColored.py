@@ -44,3 +44,7 @@ def printColored(endl, text, *format,):
         format_code = ";".join(formats[name] for name in format)
         endlT = endl if endl != "" else None
         print(f"\033[{format_code}m{text}\033[0m", end=endlT)
+
+if __name__ == '__main__':
+    print("All available formats:")
+    printColored("form dict","","")
