@@ -6,30 +6,30 @@
 
 formats = {
     # Colors
-    "gray": "30",
-    "red": "31",
-    "green": "32",
-    "yellow": "33",
-    "blue": "34",
+    "gray"   : "30",
+    "red"    : "31",
+    "green"  : "32",
+    "yellow" : "33",
+    "blue"   : "34",
     "magenta": "35",
-    "cyan": "36",
+    "cyan"   : "36",
 
     # Highlight
-    "highlight_red": "41",
-    "highlight_green": "42",
-    "highlight_yellow": "43",
-    "highlight_blue": "44",
+    "highlight_red"    : "41",
+    "highlight_green"  : "42",
+    "highlight_yellow" : "43",
+    "highlight_blue"   : "44",
     "highlight_magenta": "45",
-    "highlight_cyan": "46",
-    "highlight_gray": "47",
+    "highlight_cyan"   : "46",
+    "highlight_gray"   : "47",
 
     # Format (like bold or italic)
-    "bold": "01",
-    "italic": "03",
-    "underline": "04",
-    "inverted": "07",
-    "invisible": "08",
-    "strikethrough": "09",
+    "bold"            : "01",
+    "italic"          : "03",
+    "underline"       : "04",
+    "inverted"        : "07",
+    "invisible"       : "08",
+    "strikethrough"   : "09",
     "double_underline": "21",
 
     "nothing": "0", # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
