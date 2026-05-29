@@ -40,8 +40,6 @@ def printColored(endl, text, *format,):
     if endl == "form dict" or text == "form dict" or format=="form dict":
         for key, value in formats.items():
            print(f"\033[{value}m{key}\033[0m")
-    elif format not in formats:
-        print("The format couldnt be recognized")
     else:
         format_code = ";".join(formats[name] for name in format)
         endlT = endl if endl != "" else None
