@@ -1,3 +1,5 @@
+June first update: MORE USELESS FORMATS YAY!!!!
+
 Guide to using:
 
 first, import it like any other file if you use in another code (import it all and not only the function)
@@ -21,5 +23,10 @@ printColored("form dict","","")
 trying to write the statement above on your own may fail because what i wrote has a secret character so just copy paste it
 
 UPD: js run the main file and it will print every format
+
+(if you want a format that isnt available in my dictionary, run the test_finder() function within the range you wish, default is 1:108)
+
+(to apply the format to the dictionary, take the number in the "At iteration X", add it to the dictionary with its name ("name":"X"))
+
 
 THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!
