@@ -32,7 +32,7 @@ formats = {
     "strikethrough"   : "09",
     "double_underline": "21",
 
-    "nothing": "0", # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
+    "nothing": "0" # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
 }
 
 
