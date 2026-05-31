@@ -5,7 +5,7 @@
 # thanks :)
 
 formats = {
-    # Colors
+    # Colors 
     "gray"   : "30",
     "red"    : "31",
     "green"  : "32",
@@ -14,6 +14,16 @@ formats = {
     "magenta": "35",
     "cyan"   : "36",
 
+    # slightly bright
+    # useless but i will leave it there
+    "bright_red"     : "91",
+    "bright_green"   : "92",
+    "bright_yellow"  : "93",
+    "bright_blue"    : "94",
+    "bright_magenta" : "95",
+    "bright_cyan"    : "96",
+    "bright_white"   : "97", # trust me, this is different than bold
+
     # Highlight
     "highlight_red"    : "41",
     "highlight_green"  : "42",
@@ -21,13 +31,25 @@ formats = {
     "highlight_blue"   : "44",
     "highlight_magenta": "45",
     "highlight_cyan"   : "46",
-    "highlight_gray"   : "47",
+    "highlight_gray"   : "100",
+    "highlight_black"  : "40",
+    "highlight_white"  : "47",
+
+    # bright highlight
+    # what am i even doing in life anymore
+    "highlight_bright_red"     : "101",
+    "highlight_bright_green"   : "102",
+    "highlight_bright_yellow"  : "103",
+    "highlight_bright_blue"    : "104",
+    "highlight_bright_magenta" : "105",
+    "highlight_bright_cyan"    : "106",
+    "highlight_bright_white"   : "107",
 
     # Format (like bold or italic)
     "bold"            : "01",
     "italic"          : "03",
     "underline"       : "04",
-    "inverted"        : "07",
+    "inverted"        : "07", # inverted and highlight white are probably the same lol
     "invisible"       : "08",
     "strikethrough"   : "09",
     "double_underline": "21",
@@ -45,6 +67,12 @@ def printColored(endl, text, *format,):
         endlT = endl if endl != "" else None
         print(f"\033[{format_code}m{text}\033[0m", end=endlT)
 
+def test_finder(): # made this to find new formats, theres nothing beyond 107
+    for code in range(1, 108):
+        print(f"At iteration {code}: \033[{code}mHello World!\033[0m")
+
 if __name__ == '__main__':
     print("All available formats:")
     printColored("form dict","","")
+    print("All possible formats in range of 1-107 (reason that some of these arent available is that most of them are useless):")
+    test_finder()
