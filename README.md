@@ -31,4 +31,27 @@ UPD: js run the main file and it will print every format
 (to apply the format to the dictionary, take the number in the "At iteration X", add it to the dictionary with its name ("name":"X"))
 
 
+
+*Guide to using legacy version:*
+
+import if u want
+
+printColored(endl, endlast, *text, **format,)
+
+endl is the last character, make it an empty string for new line
+
+endlast is how the last character acts with 2 modes, make it empty for default, which will display the last character at the end of every string except the last string, which will not have the last character
+
+make it any character for mode 2, which will display the last character on every string, including the last one
+
+text is text, there can be as much text as you want
+
+format is how the string is affected, each text takes 1 format, like this:
+
+printColored(endl, endlast, "Text1", "Text2", format1="red", format2="blue")
+
+it will be like: {"Text1":format1,"Text2":format2}
+
+Text1 will take format1 so it will be red, and text2 will take format2 so it will be blue
+
 THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!
