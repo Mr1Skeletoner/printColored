@@ -28,7 +28,7 @@ trying to write the statement above on your own may fail because what i wrote ha
 
 UPD: js run the main file and it will print every format
 
-(if you want a format that isnt available in my dictionary, run the test_finder() function within the range you wish, default is 1:108)
+(if you want a format that isnt available in my dictionary, run the test_finder(x,y) (incase u missed it x and y are digits) function within the range you wish, i suggest using 1:108)
 
 (to apply the format to the dictionary, take the number in the "At iteration X", add it to the dictionary with its name ("name":"X"))
 
