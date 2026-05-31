@@ -1,5 +1,7 @@
 June first update: MORE USELESS FORMATS YAY!!!!
+
 also added legacy version to this repository
+
 also added a new version including all formats (useless ones)
 
 *Guide to using (NORMAL, LATEST VERSION "printColored.py" OR "FullDictPrintC", skip for legacy version):*
