@@ -6,7 +6,7 @@ also added a new version including all formats (useless ones)
 
 *Guide to using (NORMAL, LATEST VERSION "printColored.py" OR "FullDictPrintC", skip for legacy version):*
 
-first, import it like any other file if you use in another code (import it all and not only the function)
+first, import it like any other file if you use in another code
 
 import printColored
 
