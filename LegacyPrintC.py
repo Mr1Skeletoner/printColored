@@ -3,7 +3,7 @@
 # note that this wont be updated anymore after updating the dictionary to the latest version
 
 formats = {
-    # Colors
+    # Colors 
     "gray"   : "30",
     "red"    : "31",
     "green"  : "32",
@@ -12,6 +12,16 @@ formats = {
     "magenta": "35",
     "cyan"   : "36",
 
+    # slightly bright
+    # useless but i will leave it there
+    "bright_red"     : "91",
+    "bright_green"   : "92",
+    "bright_yellow"  : "93",
+    "bright_blue"    : "94",
+    "bright_magenta" : "95",
+    "bright_cyan"    : "96",
+    "bright_white"   : "97", # trust me, this is different than bold
+
     # Highlight
     "highlight_red"    : "41",
     "highlight_green"  : "42",
@@ -19,13 +29,25 @@ formats = {
     "highlight_blue"   : "44",
     "highlight_magenta": "45",
     "highlight_cyan"   : "46",
-    "highlight_gray"   : "47",
+    "highlight_gray"   : "100",
+    "highlight_black"  : "40",
+    "highlight_white"  : "47",
+
+    # bright highlight
+    # what am i even doing in life anymore
+    "highlight_bright_red"     : "101",
+    "highlight_bright_green"   : "102",
+    "highlight_bright_yellow"  : "103",
+    "highlight_bright_blue"    : "104",
+    "highlight_bright_magenta" : "105",
+    "highlight_bright_cyan"    : "106",
+    "highlight_bright_white"   : "107",
 
     # Format (like bold or italic)
     "bold"            : "01",
     "italic"          : "03",
     "underline"       : "04",
-    "inverted"        : "07",
+    "inverted"        : "07", # inverted and highlight white are probably the same lol
     "invisible"       : "08",
     "strikethrough"   : "09",
     "double_underline": "21",
