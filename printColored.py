@@ -1,5 +1,5 @@
 # Removed stuff with the endline to make it simpler
-# (well actually only 1 function was changed soooo)
+# except the legacy function bc the legacy function depends on the endline stuff
 # this will be the main version
 # the other may still get updates too
 # dm me on discord if you want: @1skeletoner
