@@ -68,9 +68,7 @@ def customColor(endl, text, *code):
     print(f"\033[{code}m{text}\033[0m", end=endlT)
 
 def legacyprintColored(endl, endlast, *text, **format,): # <-- USELESS PIECE OF GARBAGE 
-    # WHY IS IT SO COMPLEX WITHOUT A VALID REASON
-    # gotta make a simpler one
-    # yk what i will make this file the old version and new version without end BS
+    # WHY IS IT SO COMPLEX WITHOUT NO REASON
     endlT = endl if endl != "" else None
     format_values = list(format.values())
     x = [1]
