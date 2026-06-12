@@ -86,6 +86,10 @@ def legacyprintColored(endl, endlast, *text, **format,): # <-- USELESS PIECE OF 
             format_code = formats.get(format_type)
             print(f"\033[{format_code}m{each_text}\033[0m", end=endlT)
 
+# x and i are placeholders
+# if you remove any of them, the code will break
+# they specifically work for the endline thing
+
 def formatfinder(min, max): # made this to find new formats, theres nothing beyond 107
     # btw use strings ("1","108") and not integers (1,108)
     if min.isdigit() and max.isdigit():
