@@ -102,7 +102,8 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
            print(f"\033[{value}m{key}\033[0m")
 
 if __name__ == '__main__':
-    print("All available formats:")
+    print("All available formats in the dictionary:")
     formatfinder(" "," ")
-    print("All possible formats in range of 1-107 (reason that some of these arent available is that most of them are useless):")
+    input("Press Enter to continue: ")
+    print("All possible formats in range of 1-107:")
     formatfinder("1","107")
