@@ -1,5 +1,7 @@
 June first update: MORE USELESS FORMATS YAY!!!!
 
+12/06 update: made it wayyyyyyyyyy better (update guide later im lazy gtg playing minecraft)
+
 also added legacy version to this repository
 
 also added a new version including all formats (useless ones)
