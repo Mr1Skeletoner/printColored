@@ -58,7 +58,7 @@ formats = { # i think the dictonary now contains every possible format
     "nothing": "0" # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
 }
 
-def printColored(text, *format,):
+def printColored(text, *format):
     format_code = ";".join(formats[name] for name in format)
     print(f"\033[{format_code}m{text}\033[0m")
 
@@ -66,14 +66,24 @@ def customColor(text, *code): # this removes the need for the version with all u
     code = ";".join(code)
     print(f"\033[{code}m{text}\033[0m")
 
-def legacyprintColored(join, *text, **format,):
-    # join is the simpler endline
-    # it was needed for legacy function, bc of the way the function works
-    # just add whatever character you want to be at the end, or add "" if you dont want anythin
+def legacyprintColored(endl, endlast, *text, **format,): # <-- USELESS PIECE OF GARBAGE 
+    # so i couldnt see how to change it properly without endline stuff
+    # bc the endline thing is needed
+    # so it would have to stay as bad as it is
+    endlT = None if endl == "" else endl
     format_values = list(format.values())
-    for each_text, format_type in zip(text, format_values):
-        format_code = formats.get(format_type)
-        print(f"\033[{format_code}m{each_text}\033[0m", end=None if join == "" else join)
+    x = [1]
+    for each_text, format_type, i in zip(text, format_values, x):
+        if endlast == "":
+            if i != len(text) - 1:
+                format_code = formats.get(format_type)
+                print(f"\033[{format_code}m{each_text}\033[0m", end="")
+            else:
+                format_code = formats.get(format_type)
+                print(f"\033[{format_code}m{each_text}\033[0m", end=endlT)
+        else:
+            format_code = formats.get(format_type)
+            print(f"\033[{format_code}m{each_text}\033[0m", end=endlT)
 
 def formatfinder(min, max): # made this to find new formats, theres nothing beyond 107
     # btw use strings ("1","108") and not integers (1,108)
@@ -87,7 +97,8 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
            print(f"\033[{value}m{key}\033[0m")
 
 if __name__ == '__main__':
-    print("All available formats:")
+    print("All available formats in the dictionary:")
     formatfinder(" "," ")
-    print("All possible formats in range of 1-107 (reason that some of these arent available is that most of them are useless):")
+    input("Press Enter to continue: ")
+    print("All possible formats in range of 1-107:")
     formatfinder("1","107")
