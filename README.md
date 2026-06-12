@@ -1,46 +1,47 @@
 June first update: MORE USELESS FORMATS YAY!!!!
 
-12/06 update: made it wayyyyyyyyyy better (update guide later im lazy gtg playing minecraft)
+12/06 update: made it wayyyyyyyyyy better
 
-also added legacy version to this repository
+latest update 12/06 put all functions in the same file, and made a separate file for endline stuff that i hate
 
-also added a new version including all formats (useless ones)
 
-*Guide to using (NORMAL, LATEST VERSION "printColored.py" OR "FullDictPrintC", skip for legacy version):*
+*Guide to using printColored function:*
 
-first, import it like any other file if you use in another code
+first, import it if you use it in another code
 
-import printColored
+from printColored import *
 
 now, to use the function,
 
-printColored.printColored("endline", "text", *"formats")
+printColored("endline", "text", *"formats")
 
 endline is the last character at the end of the string, leave empty (without spaces) for new line
+
+ENDLINE DOESNT EXIST ANYMORE IN THE MAIN FILE!!
 
 text is text
 
 formats are how the string is affected. there can be 1 color only at once but multiple styles like bold and italic at the same time
 
-if you wanna check all formats/styles, you can either check the code or copy paste this:
-
-printColored("form dict","","")
-
-trying to write the statement above on your own may fail because what i wrote has a secret character so just copy paste it
-
-UPD: js run the main file and it will print every format
-
-(if you want a format that isnt available in my dictionary, run the test_finder(x,y) (incase u missed it x and y are digits) function within the range you wish, i suggest using 1:108)
-
-(to apply the format to the dictionary, take the number in the "At iteration X", add it to the dictionary with its name ("name":"X"))
 
 
+*Guide to using customColor function:*
 
-*Guide to using legacy version:*
+customColor("endline", "text", "code")
 
-import if u want
+endline and text are just same as the main function (printColored)
 
-printColored(endl, endlast, *text, **format,)
+code is the format code you want to use, for example "02" gives you foggy gray, which wasnt in the format dictionary (it is now)
+
+so i guess if you want a format that isnt in the dictionary, you can use this (btw i believe theres all formats in the dictionary now)
+
+(and to find a format that isnt in the dictionary, use the formatfinder(min,max) function
+
+
+
+*Guide to using legacyprintColored function:*
+
+legacyprintColored(endl, endlast, *text, **format,)
 
 endl is the last character, make it an empty string for new line
 
@@ -57,5 +58,19 @@ printColored(endl, endlast, "Text1", "Text2", format1="red", format2="blue")
 it will be like: {"Text1":format1,"Text2":format2}
 
 Text1 will take format1 so it will be red, and text2 will take format2 so it will be blue
+
+
+
+*Guide to using formatfinder function:*
+
+formatfinder(min, max)
+
+use strings in any case (digit or alphabet, use string)
+
+if both the given values are digits, it will print all available formats between the min and max values
+
+else, it will print all available formats in the dictionary
+
+
 
 THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!
