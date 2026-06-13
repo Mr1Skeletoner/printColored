@@ -1,7 +1,6 @@
 # Removed stuff with the endline to make it simpler
-# except the legacy function bc the legacy function depends on the endline stuff
 # this will be the main version
-# the other may still get updates too
+# the other wont get updates i give up (except if i feel like it)
 # dm me on discord if you want: @1skeletoner
 # thanks ^-^
 
@@ -17,6 +16,8 @@ formats = { # i think the dictonary now contains every possible format
 
     # slightly bright
     # useless but i will leave it there
+    "bright_gray"    : "90", # im sure this is just normal gray but
+                             # i will leave it there
     "bright_red"     : "91",
     "bright_green"   : "92",
     "bright_yellow"  : "93",
@@ -56,7 +57,8 @@ formats = { # i think the dictonary now contains every possible format
     "strikethrough"   : "9",
     "double_underline": "21",
 
-    "nothing": "0" # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
+    "reset": "0", # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
+    ""     : "0"
 }
 
 def printColored(text, *format):
@@ -67,28 +69,33 @@ def customColor(text, *code): # this removes the need for the version with all u
     code = ";".join(code)
     print(f"\033[{code}m{text}\033[0m")
 
-def legacyprintColored(endl, endlast, *text, **format,): # <-- USELESS PIECE OF GARBAGE 
-    # so i couldnt see how to change it properly without endline stuff
-    # bc the endline thing is needed
-    # so it would have to stay as bad as it is
-    endlT = None if endl == "" else endl
-    format_values = list(format.values())
-    x = [1]
-    for each_text, format_type, i in zip(text, format_values, x):
-        if endlast == "":
-            if i != len(text) - 1:
-                format_code = formats.get(format_type)
-                print(f"\033[{format_code}m{each_text}\033[0m", end="")
-            else:
-                format_code = formats.get(format_type)
-                print(f"\033[{format_code}m{each_text}\033[0m", end=endlT)
-        else:
-            format_code = formats.get(format_type)
-            print(f"\033[{format_code}m{each_text}\033[0m", end=endlT)
+def generator(*format):
+    code = ";".join(formats[name] for name in format)
+    return f"\033[{code}m"
 
-# x and i are placeholders
-# if you remove any of them, the code will break
-# they specifically work for the endline thing
+# generator is the replacement of the legacy function
+# its WAYYY simpler, but takes alot of space to write
+# btw the legacy function was broken sooo
+# i might also try to make writing using generator easier
+
+
+def printRGB(text, r, g, b, view):
+    rgbvalue = ";".join([r,g,b])
+    if view.lower() == "bg": # this is like the highlight
+        print(f"\033[48;2;{rgbvalue}m{text}\033[0m")
+    else: # and this is the normal formatting
+        print(f"\033[38;2;{rgbvalue}m{text}\033[0m")
+
+def printRGBV(text, r, g, b, r2, g2, b2, *format):
+    code = ";".join(formats[name] for name in format) 
+    # if you dont want a format when using the rgb function,
+    # you can just enter ""
+    fg = ";".join([r,g,b])
+    bg = ";".join([r2,g2,b2])
+    if code == "0":
+        print(f"\033[38;2;{fg};48;2;{bg}m{text}\033[0m")
+    else:
+        print(f"\033[38;2;{fg};48;2;{bg};{code}m{text}\033[0m")
 
 def formatfinder(min, max): # made this to find new formats, theres nothing beyond 107
     # btw use strings ("1","108") and not integers (1,108)
@@ -102,8 +109,20 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
            print(f"\033[{value}m{key}\033[0m")
 
 if __name__ == '__main__':
-    print("All available formats in the dictionary:")
-    formatfinder(" "," ")
-    input("Press Enter to continue: ")
-    print("All possible formats in range of 1-107:")
-    formatfinder("1","107")
+    choice = True if input("Do you want to see all available formats?(Y/N): ").lower() == "y" else False
+    if choice:
+        print("All available formats:")
+        formatfinder(" "," ")
+    choice = True if input("Do you want to see all existing formats? in range 1-107?(Y/N): ").lower() == "y" else False
+    if choice:    
+        print("All possible formats in range of 1-107:")
+        formatfinder("1","107")
+    
+    printColored("Example use of printColored()", "green","bold","italic")
+    customColor("Example use of customColor()", "02", "04")
+    print(f"{generator("red", "bold")}Example use {generator("","strikethrough","blue")}of generator(){generator("")}")
+    printRGB("Example use of printRGB()", "255","0","255", " ")
+    printRGB("Example 2 of printRGB()", "0","255","255", "bg")
+    printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
+    printRGBV("Example 2 of printRGBV()", "0","0","0", "255", "0", "255", "italic")
+    # Note that sometimes the background color blocks the foreground color
