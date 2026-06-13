@@ -4,6 +4,10 @@ June first update: MORE USELESS FORMATS YAY!!!!
 
 latest update 12/06 put all functions in the same file, and made a separate file for endline stuff that i hate
 
+13/06: removed legacyprintColored and replaced it with generator (legacy function was broken btw)
+
+added new functions (printRGB, printRGBV, generator) guide later
+
 
 *Guide to using printColored function:*
 
@@ -39,7 +43,7 @@ so i guess if you want a format that isnt in the dictionary, you can use this (b
 
 
 
-*Guide to using legacyprintColored function:*
+*Guide to using legacyprintColored function (ONLY IN OLD VERSION):*
 
 legacyprintColored(endl, endlast, *text, **format,)
 
@@ -67,7 +71,7 @@ formatfinder(min, max)
 
 use strings in any case (digit or alphabet, use string)
 
-if both the given values are digits, it will print all available formats between the min and max values
+if both the given values are digits, it will print all available formats between the min and max values provided
 
 else, it will print all available formats in the dictionary
 
