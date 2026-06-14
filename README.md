@@ -1,5 +1,7 @@
 *AI WAS NOT USED TO MAKE ANYTHING IN THIS CODE, EXCEPT 90% OF THE DICTIONARY, AND TEACHING ME HOW TO FORMAT, EVERYTHING ELSE WAS MADE BY ME*
 
+why the dictionary, you may ask? bc it was something that would consume alot of time
+
 June first update: MORE USELESS FORMATS YAY!!!!
 
 12/06 update: made it wayyyyyyyyyy better
@@ -10,6 +12,7 @@ latest update 12/06 put all functions in the same file, and made a separate file
 
 added new functions (printRGB, printRGBV, generator) guide later
 
+14/06: added customgenerator for rgb
 
 *Guide to using printColored function:*
 
@@ -76,6 +79,22 @@ use strings in any case (digit or alphabet, use string)
 if both the given values are digits, it will print all available formats between the min and max values provided
 
 else, it will print all available formats in the dictionary
+
+
+
+*Guide to using printRGB, printRGBV:*
+
+printRGB(text, r, g, b, view)
+
+view is either foreground (only text is affected) or background 
+
+pretty sure everything else explains itself
+
+
+
+printRGBV(text, r, g, b, r2, g2, b2, *format)
+
+r,g,b are for the foreground, r2,g2,b2 are for the background
 
 
 
