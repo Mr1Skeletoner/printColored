@@ -82,17 +82,20 @@ def customgenerator(*code): # specifically made for rgb
     code = ";".join(code)
     return f"\033[{code}m"
 
-def printRGB(text, r, g, b, view):
-    rgbvalue = ";".join([r,g,b])
-    if view.lower() == "bg": # this is like the highlight
-        print(f"\033[48;2;{rgbvalue}m{text}\033[0m")
-    else: # and this is the normal formatting
-        print(f"\033[38;2;{rgbvalue}m{text}\033[0m")
-
-def printRGBV(text, r, g, b, r2, g2, b2, *format):
+def printRGB(text, r, g, b, view, *format):
     code = ";".join(formats[name] for name in format) 
     # if you dont want a format when using the rgb function,
     # you can just enter ""
+    rgbvalue = ";".join([r,g,b])
+    viewvalue = "48" if view.lower() == "bg" else "38"
+    if code == "0":
+        print(f"\033[{viewvalue};2;{rgbvalue}m{text}\033[0m")
+    else:
+        print(f"\033[{viewvalue};2;{rgbvalue};{code}m{text}\033[0m")
+
+def printRGBV(text, r, g, b, r2, g2, b2, *format):
+    code = ";".join(formats[name] for name in format) 
+
     fg = ";".join([r,g,b])
     bg = ";".join([r2,g2,b2])
     if code == "0":
@@ -157,8 +160,8 @@ if __name__ == '__main__':
     # the rgb functions (you can either try your luck to get a good color, or find it online)
 
     # printRGB() 
-    printRGB("Example use of printRGB()", "255","0","255", " ")
-    printRGB("Example 2 of printRGB()", "0","255","255", "bg")
+    printRGB("Example use of printRGB()", "255","0","255", " ", "bold")
+    printRGB("Example 2 of printRGB()", "0","255","255", "bg", "")
 
     # printRGBV()
     printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
