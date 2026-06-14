@@ -76,8 +76,11 @@ def generator(*format):
 # generator is the replacement of the legacy function
 # its WAYYY simpler, but takes alot of space to write
 # btw the legacy function was broken sooo
-# i might also try to make writing using generator easier
+# now generator is also fixed
 
+def customgenerator(*code): # specifically made for rgb
+    code = ";".join(code)
+    return f"\033[{code}m"
 
 def printRGB(text, r, g, b, view):
     rgbvalue = ";".join([r,g,b])
@@ -113,16 +116,51 @@ if __name__ == '__main__':
     if choice:
         print("All available formats:")
         formatfinder(" "," ")
-    choice = True if input("Do you want to see all existing formats? in range 1-107?(Y/N): ").lower() == "y" else False
+    choice = True if input("Do you want to see all existing formats in range 1-107?(Y/N): ").lower() == "y" else False
     if choice:    
         print("All possible formats in range of 1-107:")
         formatfinder("1","107")
     
+    # main functions:
+
+    # printColored()
     printColored("Example use of printColored()", "green","bold","italic")
+    # customColor()
     customColor("Example use of customColor()", "02", "04")
-    print(f"{generator("red", "bold")}Example use {generator("","strikethrough","blue")}of generator(){generator("")}")
+
+    # generators (why did i name it generator?):
+
+    # generator()
+    print(
+        f"{generator("red", "bold")}Example use "
+        f"{generator("","strikethrough","blue")}of generator()"
+        f"{generator("")}"
+    )
+
+    # this method is way better
+    genformat1 = generator("bright_white","highlight_blue")
+    genformat2 = generator("", "yellow", "highlight_green", "underline")
+    print(f"{genformat1}Example 2 {genformat2}of generator(){generator("")}")
+
+    # customgenerator()
+    print(
+        f"{customgenerator("38","2","255","255","0")}Example use "
+        f"{customgenerator("0","48","2","0","0","255")}of customgenerator()"
+        f"{customgenerator("0")}"
+    )
+
+    genformat3 = customgenerator("38","2","90","50","100","3")
+    genformat4 = customgenerator("0","48","2","60","60","255")
+    print(f"{genformat3}Example 2 {genformat4}of customgenerator(){customgenerator("0")}")
+
+
+    # the rgb functions (you can either try your luck to get a good color, or find it online)
+
+    # printRGB() 
     printRGB("Example use of printRGB()", "255","0","255", " ")
     printRGB("Example 2 of printRGB()", "0","255","255", "bg")
+
+    # printRGBV()
     printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
     printRGBV("Example 2 of printRGBV()", "0","0","0", "255", "0", "255", "italic")
     # Note that sometimes the background color blocks the foreground color
