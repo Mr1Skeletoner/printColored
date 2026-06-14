@@ -18,7 +18,7 @@ latest update 12/06 put all functions in the same file, and made a separate file
 
 added new functions (printRGB, printRGBV, generator) guide for generators later
 
-14/06: added customgenerator for rgb
+14/06: added customgenerator for rgb uses
 
 ----------------------
 
@@ -118,9 +118,14 @@ for printRGBV,
     
     printRGBV(text, r, g, b, r2, g2, b2, *format)
 
-r,g,b are for the foreground, r2,g2,b2 are for the background
+r,g,b are for the foreground, r2,g2,b2 are for the background, it was made to add both foreground and background at the same time
 
 format is just like printRGB
+
+example:
+
+    printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
+    printRGBV("Example 2 of printRGBV()", "0","0","0", "255", "0", "255", "italic")
 
 ----------------------
 
