@@ -155,6 +155,8 @@ method 2(WAY easier):
 
 it works just as legacyprintColored() but easier
 
+now, for customgenerator()
+
     customgenerator(*code)
 
 just as customColored(), you enter the codes of the formats you want
