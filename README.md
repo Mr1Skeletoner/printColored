@@ -10,7 +10,7 @@ latest update 12/06 put all functions in the same file, and made a separate file
 
 13/06: removed legacyprintColored and replaced it with generator (legacy function was broken btw)
 
-added new functions (printRGB, printRGBV, generator) guide later
+added new functions (printRGB, printRGBV, generator) guide for generators later
 
 14/06: added customgenerator for rgb
 
@@ -84,9 +84,13 @@ else, it will print all available formats in the dictionary
 
 *Guide to using printRGB, printRGBV:*
 
-printRGB(text, r, g, b, view)
+printRGB(text, r, g, b, view, *format)
 
 view is either foreground (only text is affected) or background 
+
+format is some effect like bold or italic, you can add as much as you want
+
+i dont suggest trying normal colors. its also optional, you can just add ""
 
 pretty sure everything else explains itself
 
@@ -95,6 +99,8 @@ pretty sure everything else explains itself
 printRGBV(text, r, g, b, r2, g2, b2, *format)
 
 r,g,b are for the foreground, r2,g2,b2 are for the background
+
+format is just like printRGB
 
 
 
