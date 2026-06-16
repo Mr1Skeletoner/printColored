@@ -16,7 +16,7 @@ latest update 12/06 put all functions in the same file, and made a separate file
 
 13/06: removed legacyprintColored and replaced it with generator (legacy function was broken btw)
 
-added new functions (printRGB, printRGBV, generator) guide for generators later
+added new functions (printRGB, printRGBV, generator)
 
 14/06: added customgenerator for rgb uses
 
