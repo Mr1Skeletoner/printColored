@@ -1,12 +1,17 @@
-*AI WAS NOT USED TO MAKE ANYTHING IN THIS CODE, EXCEPT 90% OF THE DICTIONARY, AND TEACHING ME HOW TO FORMAT, EVERYTHING ELSE WAS MADE BY ME*
+# *printColored*
 
-why the dictionary, you may ask? bc it was something that would consume alot of time
+---
+
+# DISCLAIMER
+
+
+*AI WAS NOT USED TO MAKE ANYTHING IN THIS CODE, EXCEPT FOR SOME PARTS OF THE DICTIONARY, AND TEACHING ME HOW TO FORMAT, EVERYTHING ELSE WAS MADE BY ME*
+
+why the dictionary, you may ask? bc it was something that would consume alot of time writing it myself so i just automated it (not considered vibe coding)
 
 ----------------------
 
-CHANGELOG
-
-----------------------
+# CHANGELOG
 
 June first update: MORE USELESS FORMATS YAY!!!!
 
@@ -20,9 +25,11 @@ added new functions (printRGB, printRGBV, generator)
 
 14/06: added customgenerator for rgb uses
 
+11/07: removed the old file, updated readme, next big update will be on like 13/07 or 14/07
+
 ----------------------
 
-*1. Guide to using printColored function:*
+# *Guide to using printColored function:*
 
     printColored("text", *"formats")
 
@@ -37,7 +44,7 @@ example:
 
 ----------------------
 
-*2. Guide to using customColor function:*
+# *Guide to using customColor function:*
 
     customColor("text", "code")
 
@@ -51,33 +58,9 @@ example:
 
     customColor("Example use of customColor()", "02", "04")
 
-----------------------
+---
 
-*3. Guide to using legacyprintColored function (ONLY IN OLD VERSION(probably doesnt even work anymore)):*
-
-    legacyprintColored(endl, endlast, *text, **format,)
-
-endl is the last character, make it an empty string for new line
-
-endlast is how the last character acts with 2 modes, make it empty for default, which will display the last character at the end of every string except the last string, which will not have the last character
-
-make it any character for mode 2, which will display the last character on every string, including the last one
-
-text is text, there can be as much text as you want
-
-format is how the string is affected, each text takes 1 format, like this:
-
-printColored(endl, endlast, "Text1", "Text2", format1="red", format2="blue")
-
-it will be like: {"Text1":format1,"Text2":format2}
-
-Text1 will take format1 so it will be red, and text2 will take format2 so it will be blue
-
-no example bc i hate this
-
-----------------------
-
-*4. Guide to using formatfinder function:*
+# *Guide to using formatfinder function:*
 
     formatfinder(min, max)
 
@@ -97,7 +80,7 @@ example:
 
 ----------------------
 
-*5. Guide to using printRGB, printRGBV:*
+# *Guide to using printRGB, printRGBV:*
 
     printRGB(text, r, g, b, view, *format)
 
@@ -114,7 +97,7 @@ example:
     printRGB("Example use of printRGB()", "255","0","255", "fg", "bold")
     printRGB("Example 2 of printRGB()", "0","255","255", "bg", "")
     
-for printRGBV,
+# printRGBV 
     
     printRGBV(text, r, g, b, r2, g2, b2, *format)
 
@@ -129,7 +112,7 @@ example:
 
 ----------------------
 
-*6. Guide to using generator, customgenerator*
+# *Guide to using generator, customgenerator*
 
     generator(*format)
 
@@ -155,7 +138,7 @@ method 2(WAY easier):
 
 it works just as legacyprintColored() but easier
 
-now, for customgenerator()
+# customgenerator()
 
     customgenerator(*code)
 
@@ -181,4 +164,4 @@ method 2:
 
 ----------------------
 
-THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!
+# *THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!*
