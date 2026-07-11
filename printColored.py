@@ -75,7 +75,7 @@ def generator(*format):
 # btw the legacy function was broken sooo
 # now generator is also fixed
 
-def customgenerator(*code): # specifically made for rgb
+def customG(*code): # specifically made for rgb
     code = ";".join(code)
     return f"\033[{code}m"
 
@@ -152,14 +152,14 @@ if __name__ == '__main__':
 
     # customgenerator()
     print(
-        f"{customgenerator("38","2","255","255","0")}Example use "
-        f"{customgenerator("0","48","2","0","0","255")}of customgenerator()"
-        f"{customgenerator("0")}"
+        f"{customG("38","2","255","255","0")}Example use "
+        f"{customG("0","48","2","0","0","255")}of customgenerator()"
+        f"{customG("0")}"
     )
     printColored("--------------------------------", "green")
 
-    genformat3 = customgenerator("38","2","90","50","100","3")
-    genformat4 = customgenerator("0","48","2","60","60","255")
+    genformat3 = customG("38","2","90","50","100","3")
+    genformat4 = customG("0","48","2","60","60","255")
     print(f" {genformat3}Example 2 {genformat4}of customgenerator(){customgenerator("0")}")
     printColored("--------------------------------", "green")
 
