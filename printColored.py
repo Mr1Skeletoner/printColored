@@ -1,6 +1,3 @@
-# Removed stuff with the endline to make it simpler
-# this will be the main version
-# the other wont get updates i give up (except if i feel like it)
 # dm me on discord if you want: @1skeletoner
 # thanks ^-^
 
