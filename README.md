@@ -1,32 +1,5 @@
 # *printColored*
 
----
-
-# DISCLAIMER
-
-
-*AI WAS NOT USED TO MAKE ANYTHING IN THIS CODE, EXCEPT FOR SOME PARTS OF THE DICTIONARY, AND TEACHING ME HOW TO FORMAT, EVERYTHING ELSE WAS MADE BY ME*
-
-why the dictionary, you may ask? bc it was something that would consume alot of time writing it myself so i just automated it (not considered vibe coding)
-
-----------------------
-
-# CHANGELOG
-
-June first update: MORE USELESS FORMATS YAY!!!!
-
-12/06 update: made it wayyyyyyyyyy better
-
-latest update 12/06 put all functions in the same file, and made a separate file for endline stuff that i hate
-
-13/06: removed legacyprintColored and replaced it with generator (legacy function was broken btw)
-
-added new functions (printRGB, printRGBV, generator)
-
-14/06: added customgenerator for rgb uses
-
-11/07: removed the old file, updated readme, next big update will be on like 13/07 or 14/07
-
 ----------------------
 
 # *Guide to using printColored function:*
@@ -163,5 +136,25 @@ method 2:
     print(f" {genformat3}Example 2 {genformat4}of customgenerator(){customgenerator("0")}")
 
 ----------------------
+
+# CHANGELOG
+
+June first update: MORE USELESS FORMATS YAY!!!!
+
+12/06 update: made it wayyyyyyyyyy better
+
+latest update 12/06 put all functions in the same file, and made a separate file for endline stuff that i hate
+
+13/06: removed legacyprintColored and replaced it with generator (legacy function was broken btw)
+
+added new functions (printRGB, printRGBV, generator)
+
+14/06: added customgenerator for rgb uses
+
+11/07: removed the old file, updated readme, next big update will be on like 13/07 or 14/07
+
+14/07: added Theme and ThemeRGBV classes, better instructions in code. full guide on both and remaking readme tomorrow or something
+
+---
 
 # *THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!*
