@@ -219,7 +219,7 @@ if __name__ == '__main__':
     # printColored()
     deco.print(border)
     printColored("Example use of printColored()".center(32), "green","bold","italic")
-    print("Just take a look at all available formats and enter whatever one you want")
+    print("Take a look at the dictionary and enter formats to use")
     deco.print(border)
     
     
