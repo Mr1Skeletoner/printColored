@@ -4,7 +4,7 @@
 
 Simple library to change how text looks in many colors and formats.
 
-Using ANSI formats in a dictionary to format text, with currently 41 formats
+Using ANSI formats in a dictionary to format text, with currently 39 formats
 
 <img width="202" height="600" alt="image" src="https://github.com/user-attachments/assets/fb02dab7-aa38-447d-94dc-e93988607e0c" />
 
