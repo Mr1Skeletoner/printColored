@@ -20,19 +20,19 @@ List of functions and classes:
   
 - customC(text, *code): Lets you enter the ANSI codes on your own, incase a format isnt included in my dictionary.
 
-- Class Theme(*formats): Used for reusing formats many times.
-
-- Class ThemeRGBV(r,g,b, r2,g2,b2, *formats): Same as Class Theme, but for RGB colors.
-
 - generator(*formats): Used for multiple formats on the same line.
 
 - customG(*code): Same as generator, except you enter the codes on your own. Made specifically for RGB.
 
 - printRGB(r,g,b, view, *formats): Mixes the given RGB values, view is where the output color will be displayed, either foreground or background, and can also add formats.
 
-- printRGBV(r,g,b, r2,g2,b2, *formats): Same as printRGB, except that it takes foreground and background at the same time. r,g,b are for foreground, and r2,g2,b2 are for the background.
+- printRGBV(r,g,b, r2,g2,b2, *formats): Same as printRGB, except that it takes foreground and background at the same time. r,g,b are for foreground, and r2,g2,b2 are for the background. 
 
-- formatfinder: Used for finding new formats, but i dont think theres any format that i didnt add. 
+- Class Theme(*formats): Used for reusing formats many times.
+
+- Class ThemeRGBV(r,g,b, r2,g2,b2, *formats): Same as Class Theme, but for RGB colors.
+  
+- formatfinder: Used for finding new formats, but i dont think theres any format that i didnt add.
 
 # COMPATIBILITY WARNING!!
 
@@ -85,64 +85,7 @@ example:
 
 ---
 
-# *Guide to using formatfinder function:*
-
-    formatfinder(min, max)
-
-use strings in any case (digit or alphabet, use string)
-
-if both the given values are digits, it will print all available formats between the min and max values provided
-
-example:
-
-    formatfinder("1","107")
-
-else, it will print all available formats in the dictionary
-
-example:
-
-    formatfinder(" "," ")
-
-
-----------------------
-
-# *Guide to using printRGB, printRGBV:*
-
-    printRGB(text, r, g, b, view, *format)
-
-r, g, b are the values of the colors that get mixed to output a new color 
-
-view is either foreground (only text is affected) or background, enter bg for background, anything else for foreground
-
-format is some effect like bold or italic, you can add as much as you want
-
-i dont suggest trying normal colors in format. formats are also optional, you can just add ""
-
-example:
-
-    printRGB("Example use of printRGB()", "255","0","255", "fg", "bold")
-    printRGB("Example 2 of printRGB()", "0","255","255", "bg", "")
-
-<img width="252" height="61" alt="image" src="https://github.com/user-attachments/assets/44e1238f-50d1-47da-8b41-ae02df45942b" />
-
-# printRGBV 
-    
-    printRGBV(text, r, g, b, r2, g2, b2, *format)
-
-r,g,b are for the foreground, r2,g2,b2 are for the background, it was made to add both foreground and background at the same time
-
-format is just like printRGB
-
-example:
-
-    printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
-    printRGBV("Example 2 of printRGBV()", "0","0","0", "255", "0", "255", "italic")
-
-<img width="252" height="61" alt="image" src="https://github.com/user-attachments/assets/f48a136d-7e23-4c96-89c7-25775dbaf67f" />
-
-----------------------
-
-# *Guide to using generator, customgenerator*
+# *Guide to using generator, customG*
 
     generator(*format)
 
@@ -200,6 +143,42 @@ method 2:
 
 <img width="255" height="49" alt="image" src="https://github.com/user-attachments/assets/bb2f8b77-03c7-4c29-b6a3-4e65b135dee1" />
 
+---
+
+# *Guide to using printRGB, printRGBV:*
+
+    printRGB(text, r, g, b, view, *format)
+
+r, g, b are the values of the colors that get mixed to output a new color 
+
+view is either foreground (only text is affected) or background, enter bg for background, anything else for foreground
+
+format is some effect like bold or italic, you can add as much as you want
+
+i dont suggest trying normal colors in format. formats are also optional, you can just add ""
+
+example:
+
+    printRGB("Example use of printRGB()", "255","0","255", "fg", "bold")
+    printRGB("Example 2 of printRGB()", "0","255","255", "bg", "")
+
+<img width="252" height="61" alt="image" src="https://github.com/user-attachments/assets/44e1238f-50d1-47da-8b41-ae02df45942b" />
+
+# printRGBV 
+    
+    printRGBV(text, r, g, b, r2, g2, b2, *format)
+
+r,g,b are for the foreground, r2,g2,b2 are for the background, it was made to add both foreground and background at the same time
+
+format is just like printRGB
+
+example:
+
+    printRGBV("Example use of printRGBV()", "0","255","0", "0","0","255", "")
+    printRGBV("Example 2 of printRGBV()", "0","0","0", "255", "0", "255", "italic")
+
+<img width="252" height="61" alt="image" src="https://github.com/user-attachments/assets/f48a136d-7e23-4c96-89c7-25775dbaf67f" />
+
 ----------------------
 
 # *Guide to using Theme, ThemeRGBV*
@@ -211,6 +190,27 @@ tomorrow...
 tomorrow
 
 ---
+
+# *Guide to using formatfinder function:*
+
+    formatfinder(min, max)
+
+use strings in any case (digit or alphabet, use string)
+
+if both the given values are digits, it will print all available formats between the min and max values provided
+
+example:
+
+    formatfinder("1","107")
+
+else, it will print all available formats in the dictionary
+
+example:
+
+    formatfinder(" "," ")
+
+
+----------------------
 
 # CHANGELOG
 
