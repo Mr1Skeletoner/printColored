@@ -6,9 +6,11 @@ Simple library to change how text looks in many colors and formats.
 
 Using ANSI formats in a dictionary to format text, with currently 39 formats
 
-<img width="202" height="600" alt="image" src="https://github.com/user-attachments/assets/fb02dab7-aa38-447d-94dc-e93988607e0c" />
+<img width="135" height="320" alt="image" src="https://github.com/user-attachments/assets/ee67ea1a-179e-4576-b538-4f43b85afdc7" />
 
-<img width="130" height="138" alt="image" src="https://github.com/user-attachments/assets/5d94efe4-664b-46a9-8162-734e4e354778" />
+ 
+
+<img width="192" height="346" alt="image" src="https://github.com/user-attachments/assets/efc8dd96-99e6-4b6c-977d-682183594ada" />
 
 You can DM me for any problems on my discord: @1skeletoner
 
@@ -79,7 +81,7 @@ so i guess if you want a format that isnt in the dictionary, you can use this (b
 
 example:
 
-    customC("Example use of customColor()", "02", "04")
+    customC("Example use of customC()", "02", "04")
 
 <img width="253" height="48" alt="image" src="https://github.com/user-attachments/assets/e0bb5833-91c5-4139-9390-d800ed043e1c" />
 
@@ -183,11 +185,37 @@ example:
 
 # *Guide to using Theme, ThemeRGBV*
 
-tomorrow...
+    object = Theme(*formats) 
+
+The main purpose of the theme class is to use a format or a style many times.
+
+It can be used for decorations or common formats used in your code.
+
+It has a few methods:
+
+- obj.print(text): simply prints the text with the formats used in the objects.
+
+- obj.add(*new): adds a new format.
+
+- obj.remove(*formats): removes the specified formats if they exist.
+
+- obj.overwrite(*new): rewrite the whole object, removing all the previous formats, and replaces them with the new.
+
+- obj.showUsed(): shows the currently used formats
 
 # *ThemeRGBV*
 
-tomorrow
+    object = ThemeRGBV(r,g,b, r2,g2,b2, *formats)
+
+Its same as the Theme class, but with RGB. Accepts both foreground and background values at the same time (r,g,b being foreground, r2,g2,b2 being background), and you can not enter whatever you want and leave it as an empty string. It also accepts formats
+
+It has the same methods as the main Theme class, with a few changes:
+
+- obj.add() and obj.remove(): Only affects formats
+
+- obj.overwrite(): Rewrites the entire thing, including the RGB and formats
+
+- obj.showUsed(): show the RGB values and the used formats
 
 ---
 
