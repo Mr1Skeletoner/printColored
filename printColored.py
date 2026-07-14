@@ -1,5 +1,9 @@
-# dm me on discord if you want: @1skeletoner
-# thanks ^-^
+"""
+ discord: @1skeletoner
+ youtube: https://www.youtube.com/@1skeletoner
+ github : https://github.com/Mr1Skeletoner/printColored
+ thanks for reading :D
+"""
 
 formats = { # i think the dictonary now contains every possible format
     # Colors 
@@ -235,27 +239,27 @@ if __name__ == '__main__':
         f"{generator("red", "bold")}   Example use "
         f"{generator("","strikethrough","blue")}of generator()"
         f"{generator("")}")
-    deco.print(border)
+
 
     # this method is way better
     genformat1 = generator("bright_white","highlight_blue")
     genformat2 = generator("", "yellow", "highlight_green", "underline")
     print(f"    {genformat1}Example 2 {genformat2}of generator(){generator("")}")
-    print("This is used for multiple formats in the same line")
+    #print("This is used for multiple formats in the same line")
     deco.print(border)
 
     # customG()
     print(
-        f"{customG("38","2","255","255","0")}Example use "
+        f"{customG("38","2","255","255","0")}    Example use "
         f"{customG("0","48","2","0","0","255")}of customG()"
         f"{customG("0")}"
     )
-    deco.print(border)
+
 
     genformat3 = customG("38;2","90","50","100","3")
     genformat4 = customG("0","48;2","60","60","255")
-    print(f" {genformat3}Example 2 {genformat4}of customG(){customG("0")}")
-    print("Same as generator, but for RGB. Also hard to use and read bc its only format codes")
+    print(f"     {genformat3}Example 2 {genformat4}of customG(){customG("0")}")
+    #print("Same as generator, but for RGB. Also hard to use and read bc its only format codes")
     deco.print(border)
 
 
@@ -263,7 +267,7 @@ if __name__ == '__main__':
 
     # printRGB() 
     printRGB("Example use of printRGB()".center(32), "255","0","255", " ", "bold")
-    deco.print(border)
+
     printRGB("Example 2 of printRGB()".center(32), "0","255","255", "bg", "")
     print("Notice how it can only display either \nforeground or background at one time")
     print("You can also add formats to it".center(32))
@@ -271,7 +275,6 @@ if __name__ == '__main__':
 
     # printRGBV()
     printRGBV("Example use of printRGBV()".center(32), "0","255","0", "0","0","255", "")
-    deco.print(border)
     printRGBV("Example 2 of printRGBV()".center(32), "0","0","0", "255", "0", "255", "italic")
     print("It can both display foreground and background, and also add formats".center(32))
     # Note that sometimes the background color blocks the foreground color
@@ -305,6 +308,8 @@ if __name__ == '__main__':
     classified.overwrite("0","0","0","255","255","255", "strikethrough")
     classified.print("Example of 'overwrite(r,g,b, r2,g2,b2, *new)'")
     print("Overwrite rewrites the whole thing")
+    classified.showUsed()
+    print("'showUsed()' does the same as the theme class")
 
     deco.print(border)
     deco.overwrite("bright_blue", "bold")
