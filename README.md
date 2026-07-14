@@ -12,8 +12,6 @@ Using ANSI formats in a dictionary to format text, with currently 39 formats
 
 <img width="192" height="346" alt="image" src="https://github.com/user-attachments/assets/efc8dd96-99e6-4b6c-977d-682183594ada" />
 
-You can DM me for any problems on my discord: @1skeletoner
-
 List of functions and classes:
 
 - Formats Dictionary: Containing ANSI codes to format text.
@@ -261,3 +259,5 @@ added new functions (printRGB, printRGBV, generator)
 ---
 
 # *THANK YOU FOR READING/USING MY CODE!! HOPE IT HELPS!!*
+
+You can DM me for any problems on my discord: @1skeletoner
