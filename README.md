@@ -44,9 +44,19 @@ Terminals that i know do not support ANSI formatting:
 
 - Running the script directly through python
 
-- Probably most online web editory
+- Probably most online web editors
 
 - Acode for phone 
+
+---
+
+# *How to use in your code?*
+
+Simply download the .py, put it in your work space, and import it like this:
+
+    from printColored import *
+
+other methods for installation later
 
 ----------------------
 
@@ -205,7 +215,7 @@ It has a few methods:
 
     object = ThemeRGBV(r,g,b, r2,g2,b2, *formats)
 
-Its same as the Theme class, but with RGB. Accepts both foreground and background values at the same time (r,g,b being foreground, r2,g2,b2 being background), and you can not enter whatever you want and leave it as an empty string. It also accepts formats
+Its same as the Theme class, but with RGB. Accepts both foreground and background values at the same time (r,g,b being foreground, r2,g2,b2 being background), and you can leave whatever you dont want as an empty string. It also accepts formats
 
 It has the same methods as the main Theme class, with a few changes:
 
