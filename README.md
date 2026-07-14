@@ -254,7 +254,7 @@ added new functions (printRGB, printRGBV, generator)
 
 11/07: removed the old file, updated readme, next big update will be on like 13/07 or 14/07
 
-14/07: added Theme and ThemeRGBV classes, better instructions in code. full guide on both and remaking readme tomorrow or something
+14/07: added Theme and ThemeRGBV classes, better instructions in code, remade the readme with pictures.
 
 ---
 
