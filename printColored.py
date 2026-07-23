@@ -5,6 +5,26 @@
  thanks for reading :D
 """
 
+try:
+    import fonts
+except ImportError:
+    fonts = {}
+    def fonter(*placeholder):
+        pass
+
+def check(text, *inputs):
+    changed = False
+    font = ""
+    decorator = ""
+    for request in inputs:
+        if request in fonts.fonts:
+            font = request
+            changed = True
+        elif request in fonts.decorators:
+            decorator = request
+            changed = True
+    return fonts.fonter(text, font, decorator) if changed == True else text 
+
 formats = { # i think the dictonary now contains every possible format
     # Colors 
     "gray"   : "30",
@@ -67,7 +87,8 @@ class Theme:
         self._formats = _formats
     
     def print(self, text):
-        self.format_code = ";".join(formats[name] for name in self._formats)
+        text = check(text, *self._formats)
+        self.format_code = ";".join(formats[name] for name in self._formats if name in formats)
         print(f"\033[{self.format_code}m{text}\033[0m")
     
     def overwrite(self, *new):
@@ -88,7 +109,7 @@ class Theme:
 
 
 class ThemeRGBV(Theme):
-    def __init__(self, r, g, b, r2, g2, b2, *_formats):
+    def __init__(self, r="", g="", b="", r2="", g2="", b2="", *_formats):
         super().__init__(*_formats)
         
         if r == "" or g == "" or b == "":
@@ -106,22 +127,23 @@ class ThemeRGBV(Theme):
             self.bg = ";".join([r2,g2,b2])
             
     def print(self, text):
+        text = check(text, *self._formats)
         if self.fg == "":
             if self.bg == "":
                 super().print(text)
             else:
-                self.formatcode = ";".join(formats[name] for name in self._formats)
+                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
                 self.rgbcode = "48;2;" + self.bg
                 self.finalcode = self.formatcode + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
         else:
             if self.bg == "":
-                self.formatcode = ";".join(formats[name] for name in self._formats)
+                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
                 self.rgbcode = "38;2;" + self.fg
                 self.finalcode =  self.formatcode + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
             else:
-                self.formatcode = ";".join(formats[name] for name in self._formats)
+                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
                 self.rgbcode = "38;2;" + self.fg + ";48;2;" + self.bg
                 self.finalcode = self.formatcode + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
@@ -150,15 +172,17 @@ class ThemeRGBV(Theme):
 
 
 def printColored(text, *_formats):
-    format_code = ";".join(formats[name] for name in _formats)
+    text = check(text, *_formats)
+    format_code = ";".join(formats[name] for name in _formats if name in formats)
     print(f"\033[{format_code}m{text}\033[0m")
 
 def customC(text, *code): # this removes the need for the version with all useless formats
+    # but cannot use fonts
     code = ";".join(code)
     print(f"\033[{code}m{text}\033[0m")
 
 def generator(*_formats):
-    code = ";".join(formats[name] for name in _formats)
+    code = ";".join(formats[name] for name in _formats if name in formats)
     return f"\033[{code}m"
 
 # generator is the replacement of the legacy function
@@ -199,6 +223,11 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
         max = int(max)
         for code in range(min, max+1):
             print(f"At iteration {code}: \033[{code}mHello World!\033[0m")
+    elif min == "font" or max == "font":
+        for key, value in fonts.fonts.items():
+            print(f"{key}: {value}")
+        for key, value in fonts.decorators.items():
+            print(f"{key}: {value}")
     else:
         for key, value in formats.items():
            print(f"\033[{value}m{key}\033[0m")
@@ -212,12 +241,21 @@ if __name__ == '__main__':
     if choice:
         print("All available formats:")
         formatfinder(" "," ")
+
     deco.print(border)
     choice = True if input("Do you want to see all existing formats in range 1-107?(Y/N): ").lower() == "y" else False
     if choice:    
         print("All possible formats in range of 1-107:")
         formatfinder("1","107")
     
+    deco.print(border)
+    choice = True if input("Do you want to see all fonts and decorators in the extra file?(Y/N): ").lower() == "y" else False
+    if choice:    
+        print("All fonts + decorators available:")
+        formatfinder(" ","font")
+        print
+    
+
     # main functions:
     
     # printColored()
