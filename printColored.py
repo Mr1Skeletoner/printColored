@@ -6,9 +6,9 @@
 """
 
 try:
-    import fonts
+    import Fonter
 except ImportError:
-    fonts = {}
+    Fonter = {}
     def fonter(*placeholder):
         pass
 
@@ -17,13 +17,13 @@ def check(text, *inputs):
     font = ""
     decorator = ""
     for request in inputs:
-        if request in fonts.fonts:
+        if request in Fonter.fonts:
             font = request
             changed = True
-        elif request in fonts.decorators:
+        elif request in Fonter.decorators:
             decorator = request
             changed = True
-    return fonts.fonter(text, font, decorator) if changed == True else text 
+    return Fonter.fonter(text, font, decorator) if changed == True else text 
 
 formats = { # i think the dictonary now contains every possible format
     # Colors 
@@ -107,6 +107,30 @@ class Theme:
     def showUsed(self):
         print(self._formats)
 
+	# dunder methods
+	# note that you should enter only one string at once 
+	# using add/iadd/sub/isub,
+	# otherwise it wont work
+	
+    def __add__(self, *new):
+        self.add(*new)
+        return self
+    
+    def __sub__(self, *removed):
+        self.remove(*removed)
+        return self
+
+    def __iadd__(self, *new):
+        self.add(*new)
+        return self
+    
+    def __isub__(self, *removed):
+        self.remove(*removed)
+        return self
+
+    def __str__(self):
+        return str(self._formats)
+
 
 class ThemeRGBV(Theme):
     def __init__(self, r="", g="", b="", r2="", g2="", b2="", *_formats):
@@ -177,7 +201,7 @@ def printColored(text, *_formats):
     print(f"\033[{format_code}m{text}\033[0m")
 
 def customC(text, *code): # this removes the need for the version with all useless formats
-    # but cannot use fonts
+    # but cannot use Fonter
     code = ";".join(code)
     print(f"\033[{code}m{text}\033[0m")
 
@@ -196,7 +220,8 @@ def customG(*code): # specifically made for rgb
     return f"\033[{code}m"
 
 def printRGB(text, r, g, b, view, *_formats):
-    code = ";".join(formats[name] for name in _formats) 
+    text = check(text, *_formats)
+    code = ";".join(formats[name] for name in _formats if name in formats) 
     # if you dont want a format when using the rgb function,
     # you can just enter ""
     rgbvalue = ";".join([r,g,b])
@@ -207,7 +232,8 @@ def printRGB(text, r, g, b, view, *_formats):
         print(f"\033[{viewvalue};2;{rgbvalue};{code}m{text}\033[0m")
 
 def printRGBV(text, r, g, b, r2, g2, b2, *_formats):
-    code = ";".join(formats[name] for name in _formats) 
+    text = check(text, *_formats)
+    code = ";".join(formats[name] for name in _formats if name in formats) 
 
     fg = ";".join([r,g,b])
     bg = ";".join([r2,g2,b2])
@@ -224,9 +250,9 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
         for code in range(min, max+1):
             print(f"At iteration {code}: \033[{code}mHello World!\033[0m")
     elif min == "font" or max == "font":
-        for key, value in fonts.fonts.items():
+        for key, value in Fonter.Fonter.items():
             print(f"{key}: {value}")
-        for key, value in fonts.decorators.items():
+        for key, value in Fonter.decorators.items():
             print(f"{key}: {value}")
     else:
         for key, value in formats.items():
@@ -249,9 +275,9 @@ if __name__ == '__main__':
         formatfinder("1","107")
     
     deco.print(border)
-    choice = True if input("Do you want to see all fonts and decorators in the extra file?(Y/N): ").lower() == "y" else False
+    choice = True if input("Do you want to see all Fonter and decorators in the extra file?(Y/N): ").lower() == "y" else False
     if choice:    
-        print("All fonts + decorators available:")
+        print("All Fonter + decorators available:")
         formatfinder(" ","font")
         print
     
