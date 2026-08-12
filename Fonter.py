@@ -76,13 +76,7 @@ decorators = {
 
 def Fonter(text, font, decorator=""):
     original = fonts["original"]
-    fontedtext = []
-    for letter in text:
-        if letter in original:
-            index = original.index(letter)
-            fontedtext.append(fonts[font][index])
-        else:
-            fontedtext.append(letter)
+    fontedtext = [fontedtext.append(fonts[font][original.index(letter)]) if letter in original else fontedtext.append(letter) for letter in text]       
     
     if decorator == "":
         return "".join(fontedtext)
