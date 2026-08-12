@@ -74,7 +74,7 @@ decorators = {
 
 
 
-def fonter(text, font, decorator=""):
+def Fonter(text, font, decorator=""):
     original = fonts["original"]
     fontedtext = []
     for letter in text:
@@ -88,4 +88,3 @@ def fonter(text, font, decorator=""):
         return "".join(fontedtext)
     else:
         return str(decorators[decorator][0]) + "".join(fontedtext) + str(decorators[decorator][1])
-#print(fonter(" M r 1Skeletoner", "hollow", "notes"))

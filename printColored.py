@@ -8,8 +8,9 @@
 try:
     import Fonter
 except ImportError:
-    Fonter = {}
-    def fonter(*placeholder):
+    fonts = {}
+    decorators = {}
+    def Fonter(*placeholder):
         pass
 
 def check(text, *inputs):
@@ -23,7 +24,7 @@ def check(text, *inputs):
         elif request in Fonter.decorators:
             decorator = request
             changed = True
-    return Fonter.fonter(text, font, decorator) if changed == True else text 
+    return Fonter.Fonter(text, font, decorator) if changed == True else text 
 
 formats = { # i think the dictonary now contains every possible format
     # Colors 
@@ -60,17 +61,17 @@ formats = { # i think the dictonary now contains every possible format
 
     # bright highlight
     # what am i even doing in life anymore
-    "highlight_bright_red"     : "101",
-    "highlight_bright_green"   : "102",
+    "highlight_bright_red"      : "101",
+    "highlight_bright_green"    : "102",
     "highlight_bright_yellow"  : "103",
-    "highlight_bright_blue"    : "104",
+    "highlight_bright_blue"     : "104",
     "highlight_bright_magenta" : "105",
     "highlight_bright_cyan"    : "106",
     "highlight_bright_white"   : "107",
 
     # Formats (like bold or italic)
     "bold"            : "1",
-    "foggy_gray"      : "2",
+    "foggygray"       : "2",
     "italic"          : "3",
     "underline"       : "4",
     "inverted"        : "7", # inverted and highlight white are probably the same lol
@@ -83,29 +84,25 @@ formats = { # i think the dictonary now contains every possible format
 }
 
 class Theme:
-    def __init__(self, *_formats):
-        self._formats = _formats
+    def __init__(self, *formats_used):
+        self.formats_used = formats_used
     
     def print(self, text):
-        text = check(text, *self._formats)
-        self.format_code = ";".join(formats[name] for name in self._formats if name in formats)
+        text = check(text, *self.formats_used)
+        self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
         print(f"\033[{self.format_code}m{text}\033[0m")
     
     def overwrite(self, *new):
-        self._formats = new
+        self.formats_used = new
     
     def add(self, *new):
-        self._formats = self._formats + new
-    
+        self.formats_used = self.formats_used + new
+
     def remove(self, *removed):
-        self._formats = list(self._formats)
-        for fmt in self._formats:
-            if fmt in removed:
-                self._formats.remove(fmt)
-        self._formats = tuple(self._formats)
+        self.formats_used = tuple(fformat for fformat in self.formats_used if fformat not in removed)
     
     def showUsed(self):
-        print(self._formats)
+        print(self.formats_used)
 
 	# dunder methods
 	# note that you should enter only one string at once 
@@ -129,12 +126,12 @@ class Theme:
         return self
 
     def __str__(self):
-        return str(self._formats)
+        return str(self.formats_used)
 
 
 class ThemeRGBV(Theme):
-    def __init__(self, r="", g="", b="", r2="", g2="", b2="", *_formats):
-        super().__init__(*_formats)
+    def __init__(self, r="", g="", b="", r2="", g2="", b2="", *formats_used):
+        super().__init__(*formats_used)
         
         if r == "" or g == "" or b == "":
             self.fg = ""
@@ -151,25 +148,25 @@ class ThemeRGBV(Theme):
             self.bg = ";".join([r2,g2,b2])
             
     def print(self, text):
-        text = check(text, *self._formats)
+        text = check(text, *self.formats_used)
         if self.fg == "":
             if self.bg == "":
                 super().print(text)
             else:
-                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
+                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
                 self.rgbcode = "48;2;" + self.bg
-                self.finalcode = self.formatcode + ";" + self.rgbcode
+                self.finalcode = self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
         else:
             if self.bg == "":
-                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
+                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
                 self.rgbcode = "38;2;" + self.fg
-                self.finalcode =  self.formatcode + ";" + self.rgbcode
+                self.finalcode =  self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
             else:
-                self.formatcode = ";".join(formats[name] for name in self._formats if name in formats)
+                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
                 self.rgbcode = "38;2;" + self.fg + ";48;2;" + self.bg
-                self.finalcode = self.formatcode + ";" + self.rgbcode
+                self.finalcode = self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
     
     def overwrite(self, r,g,b, r2,g2,b2, *new):
@@ -192,36 +189,47 @@ class ThemeRGBV(Theme):
     def showUsed(self):
       print(f"Foreground: {self.fg}")
       print(f"Background: {self.bg}")
-      print(f"Formats: {self._formats}")
+      print(f"Formats: {self.formats_used}")
 
 
-def printColored(text, *_formats):
-    text = check(text, *_formats)
-    format_code = ";".join(formats[name] for name in _formats if name in formats)
-    print(f"\033[{format_code}m{text}\033[0m")
-
-def customC(text, *code): # this removes the need for the version with all useless formats
-    # but cannot use Fonter
-    code = ";".join(code)
+def printColored(text, *formats_used):
+    text = check(text, *formats_used)
+    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
     print(f"\033[{code}m{text}\033[0m")
 
-def generator(*_formats):
-    code = ";".join(formats[name] for name in _formats if name in formats)
+
+def colorGen(*formats_used):
+    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
     return f"\033[{code}m"
 
-# generator is the replacement of the legacy function
+# colorGen is the replacement of the legacy function
 # its WAYYY simpler, but takes alot of space to write
 # btw the legacy function was broken sooo
-# now generator is also fixed
+# now colorGen is also fixed
 
-def customG(*code): # specifically made for rgb
-    # also shortened the name for faster writing
-    code = ";".join(code)
-    return f"\033[{code}m"
 
-def printRGB(text, r, g, b, view, *_formats):
-    text = check(text, *_formats)
-    code = ";".join(formats[name] for name in _formats if name in formats) 
+
+def printl(text=(), formats_used=(), sepr=""):
+    for i, (line, fformat) in enumerate(zip(text, formats_used)):
+        line = check(line, fformat)
+        if type(fformat) == str:
+            code = (fformat if fformat.isdigit() else formats.get(fformat))
+        elif type(fformat) == tuple:
+            code = ";".join(name if name.isdigit() else formats.get(name) for name in fformat)
+
+        if code == None:
+            print(f"{line}\033[0m" + sepr, end="\n" if i == len(text) - 1 else "")
+        else:
+            print(f"\033[{code}m{line}\033[0m" + sepr, end="\n" if i == len(text) - 1 else "")
+        
+# printl is the replacement of colorGen
+# its WAY WAYYYY simpler, and takes less space to write
+# Dunno if i should keep colorGen, but ill just leave it there because
+# it returns the color code itself
+
+def printRGB(text, r,g,b, view, *formats_used):
+    text = check(text, *formats_used)
+    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
     # if you dont want a format when using the rgb function,
     # you can just enter ""
     rgbvalue = ";".join([r,g,b])
@@ -231,10 +239,10 @@ def printRGB(text, r, g, b, view, *_formats):
     else:
         print(f"\033[{viewvalue};2;{rgbvalue};{code}m{text}\033[0m")
 
-def printRGBV(text, r, g, b, r2, g2, b2, *_formats):
-    text = check(text, *_formats)
-    code = ";".join(formats[name] for name in _formats if name in formats) 
-
+def printRGBV(text, r,g,b, r2, g2, b2, *formats_used):
+    text = check(text, *formats_used)
+    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
+        
     fg = ";".join([r,g,b])
     bg = ";".join([r2,g2,b2])
     if code == "0":
@@ -250,7 +258,7 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
         for code in range(min, max+1):
             print(f"At iteration {code}: \033[{code}mHello World!\033[0m")
     elif min == "font" or max == "font":
-        for key, value in Fonter.Fonter.items():
+        for key, value in Fonter.fonts.items():
             print(f"{key}: {value}")
         for key, value in Fonter.decorators.items():
             print(f"{key}: {value}")
@@ -260,6 +268,7 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
 
 if __name__ == '__main__':
     deco = Theme("green", "bold")
+    deco2 = Theme("bright_blue", "bold")
     border = "--------------------------------"
     deco.print(border)
     
@@ -279,104 +288,123 @@ if __name__ == '__main__':
     if choice:    
         print("All Fonter + decorators available:")
         formatfinder(" ","font")
-        print
+
+    deco.print(border)
     
+    deco2.print(border)
+    print("Guide for using the functions:")
+    deco2.print(border)
 
     # main functions:
     
     # printColored()
     deco.print(border)
+    print("Page 1:")
     printColored("Example use of printColored()".center(32), "green","bold","italic")
+    print("Main function, enter text, then formats, and the text will come formatted based on the provided formats")
     print("Take a look at the dictionary and enter formats to use")
     deco.print(border)
+    input("Press enter to continue...")
+
     
-    
-    # customC()
-    customC("Example use of customC()".center(32), "02", "04")
-    print("This is used to enter specific formats not in the dictionary")
+    # colorGen()
     deco.print(border)
-
-    # generators (why did i name it generator?):
-
-    # generator()
+    print("Page 2:")
     print(
-        f"{generator("red", "bold")}   Example use "
-        f"{generator("","strikethrough","blue")}of generator()"
-        f"{generator("")}")
-
-
-    # this method is way better
-    genformat1 = generator("bright_white","highlight_blue")
-    genformat2 = generator("", "yellow", "highlight_green", "underline")
-    print(f"    {genformat1}Example 2 {genformat2}of generator(){generator("")}")
-    #print("This is used for multiple formats in the same line")
-    deco.print(border)
-
-    # customG()
-    print(
-        f"{customG("38","2","255","255","0")}    Example use "
-        f"{customG("0","48","2","0","0","255")}of customG()"
-        f"{customG("0")}"
+        f"{colorGen('red', 'bold')}   Example use "
+        f"{colorGen('', 'strikethrough', 'blue')}of colorGen()"
+        f"{colorGen('')}"
     )
 
-
-    genformat3 = customG("38;2","90","50","100","3")
-    genformat4 = customG("0","48;2","60","60","255")
-    print(f"     {genformat3}Example 2 {genformat4}of customG(){customG("0")}")
-    #print("Same as generator, but for RGB. Also hard to use and read bc its only format codes")
+    
+    genformat1 = colorGen("bright_white", "highlightblue")
+    genformat2 = colorGen("", "yellow", "highlightgreen", "underline")
+    print(f"    {genformat1}Example 2 {genformat2}of colorGen(){colorGen('')}")
+    print("This is used to enter many formats in the same line")
     deco.print(border)
+    input("Press enter to continue...")
 
 
-    # the rgb functions (you can either try your luck to get a good color, or find it online)
+    deco.print(border)
+    print("Page 3:")
+    printl(("Example", "use", "of", "printl()"),("green", ("36", "italic"), "yellow", "magenta"), sepr=" ")
+    print("Printl is used to print many text in same line each with their own formats")
+    deco.print(border)
+    input("Press enter to continue...")
 
-    # printRGB() 
-    printRGB("Example use of printRGB()".center(32), "255","0","255", " ", "bold")
-
-    printRGB("Example 2 of printRGB()".center(32), "0","255","255", "bg", "")
-    print("Notice how it can only display either \nforeground or background at one time")
+    # printRGB()
+    deco.print(border)
+    print("Page 4:")
+    printRGB("Example use of printRGB()".center(32), "255", "0", "255", " ", "bold")
+    printRGB("Example 2 of printRGB()".center(32), "0", "255", "255", "bg", "")
+    print("Notice how it can only display either")
+    print("foreground or background at one time")
     print("You can also add formats to it".center(32))
     deco.print(border)
+    input("Press enter to continue...")
 
+    
     # printRGBV()
-    printRGBV("Example use of printRGBV()".center(32), "0","255","0", "0","0","255", "")
-    printRGBV("Example 2 of printRGBV()".center(32), "0","0","0", "255", "0", "255", "italic")
-    print("It can both display foreground and background, and also add formats".center(32))
-    # Note that sometimes the background color blocks the foreground color
-    
     deco.print(border)
+    print("Page 5:")
+    printRGBV("Example use of printRGBV()".center(32), "0", "255", "0", "0", "0", "255", "")
+    printRGBV("Example 2 of printRGBV()".center(32), "0", "0", "0", "255", "0", "255", "italic")
+    print("It can display both foreground and background")
+    print("and also add formats".center(32))
+    print("Note that sometimes the background")
+    print("color blocks the foreground color")
+    deco.print(border)
+    input("Press enter to continue...")
+
     
-    # Theme and ThemeRGBV classes
-    deadly = Theme("bright_red", "double_underline", "bold")
+    # Theme
+    deco.print(border)
+    print("Page 6:")
+    deadly = Theme("brightred", "double_underline", "bold")
     deadly.print("Example use of Theme class")
     print("It can be used for formats that you use many times")
+
     deadly.add("strikethrough")
-    deadly.print("Example of adding a format(s) using 'add(*formats)'")
+    deadly.print("Example of add(*formats)")
+
     deadly.remove("double_underline", "strikethrough")
-    deadly.print("Example of removing a format(s) using 'remove(*formats)'")
-    deadly.overwrite("highlight_bright_red", "underline")
-    deadly.print("Example of overwriting the object using 'overwrite(*formats)'")
+    deadly.print("Example of remove(*formats)")
+
+    deadly.overwrite("highlight_brightred", "underline")
+    deadly.print("Example of overwrite(*formats)")
+
     deadly.showUsed()
-    print("You can check the currently used formats using 'showUsed()'")
-
+    print("showUsed() displays the current formats")
     deco.print(border)
+    input("Press enter to continue...")
 
-    classified = ThemeRGBV("255", "255", "255", "0","0","0", "")
-    classified.print("Example of 'printRGBV(r,g,b, r2,g2,b2, *formats)'")
-    print("It can change both foreground and background, \nand you can choose to use 1 only or both")
+    
+    # ThemeRGBV
+    deco.print(border)
+    print("Page 7:")
+    classified = ThemeRGBV("255", "255", "255", "0", "0", "0", "")
+    classified.print("Example of printRGBV(r,g,b,r2,g2,b2,*formats)")
+    print("It can change both foreground and background")
+    print("and you can choose to use one or both")
 
-    classified.add("bold","underline")
-    classified.print("Example of 'add(*formats)'")
+    classified.add("bold", "underline")
+    classified.print("Example of add(*formats)")
+
     classified.remove("underline")
-    classified.print("Example of 'remove(*formats)'")
-    print("Adding/removing only affects formats and not the RGB values")
-    classified.overwrite("0","0","0","255","255","255", "strikethrough")
-    classified.print("Example of 'overwrite(r,g,b, r2,g2,b2, *new)'")
-    print("Overwrite rewrites the whole thing")
+    classified.print("Example of remove(*formats)")
+    print("Adding/removing only affects formats")
+
+    classified.overwrite("0", "0", "0", "255", "255", "255", "strikethrough")
+    classified.print("Example of overwrite(r,g,b,r2,g2,b2,*new)")
+    print("Overwrite rewrites the whole object")
+
     classified.showUsed()
-    print("'showUsed()' does the same as the theme class")
+    print("showUsed() displays the current settings")
+    deco.print(border)
+    input("Press enter to continue...")
+
 
     deco.print(border)
-    deco.overwrite("bright_blue", "bold")
-    deco.print(border)
-    print("Scroll up for instructions!")
-    deco.print(border)
+    deco2.print(border)
+    print("Thanks for reading!")
+    deco2.print(border)
