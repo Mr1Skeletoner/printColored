@@ -12,6 +12,8 @@ Using ANSI formats in a dictionary to format text, with currently 39 formats
 
 <img width="192" height="346" alt="image" src="https://github.com/user-attachments/assets/efc8dd96-99e6-4b6c-977d-682183594ada" />
 
+too lazy to update readme
+
 List of functions and classes:
 
 - Formats Dictionary: Containing ANSI codes to format text.
