@@ -41,8 +41,7 @@ fonts = {
 
 
 
-    "": ("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"," ","0","1","2","3","4","5","6","7","8","9","!","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","\\","]","^","_","`","{","|","}","~"), 
-    # ^^^  --> placeholder
+
 }
 
 random_decorators = {
@@ -69,16 +68,16 @@ decorators = {
     "chess": (choice(random_decorators["chess"]), choice(random_decorators["chess"])),
     "cards": (choice(random_decorators["cards"]), choice(random_decorators["cards"])),
 
-    "": "" # placeholder 2x
 }
 
 
 
 def Fonter(text, font, decorator=""):
     original = fonts["original"]
-    fontedtext = [fontedtext.append(fonts[font][original.index(letter)]) if letter in original else fontedtext.append(letter) for letter in text]       
-    
+    fontedtext = []
+    for letter in text:
+        fontedtext.append(fonts[font][original.index(letter)] if letter in original else letter)
+    result = "".join(fontedtext)
     if decorator == "":
-        return "".join(fontedtext)
-    else:
-        return str(decorators[decorator][0]) + "".join(fontedtext) + str(decorators[decorator][1])
+        return result
+    return f"{decorators[decorator][0]}{result}{decorators[decorator][1]}"

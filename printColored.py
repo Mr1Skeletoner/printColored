@@ -5,15 +5,12 @@
  thanks for reading :D
 """
 
-try:
-    import Fonter
-except ImportError:
-    fonts = {}
-    decorators = {}
-    def Fonter(*placeholder):
-        pass
+import json
+with open('custom.json', 'r') as file:
+    custom_formats = json.load(file)
+import Fonter
 
-def check(text, *inputs):
+def _font_check(text, *inputs):
     changed = False
     font = ""
     decorator = ""
@@ -25,6 +22,34 @@ def check(text, *inputs):
             decorator = request
             changed = True
     return Fonter.Fonter(text, font, decorator) if changed == True else text 
+
+def _single_code(fformat):
+    if fformat.replace(";", "").isdigit():
+        return fformat
+    elif fformat in formats:
+        return formats.get(fformat)
+    elif fformat in custom_formats:
+        return custom_formats.get(fformat)
+    else:
+        print(f"{fformat}: Unknown Format!")
+
+def _build_code(*formats_used):
+    code_list = []
+    for name in formats_used:
+        name = _single_code(name)
+        if name != None: 
+            code_list.append(name)
+        
+    return ";".join(code_list)
+
+def _rgb_validation(r,g,b):
+    if r == "" or g == "" or b == "":
+        return ""
+    elif not r.isdigit() or not g.isdigit() or not b.isdigit():
+        return ""
+    elif int(r) > 255 or int(r) < 0 or int(g) > 255 or int(g) < 0 or int(b) > 255 or int(b) < 0:
+        return ""
+    return ";".join([r,g,b])
 
 formats = { # i think the dictonary now contains every possible format
     # Colors 
@@ -88,8 +113,8 @@ class Theme:
         self.formats_used = formats_used
     
     def print(self, text):
-        text = check(text, *self.formats_used)
-        self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
+        text = _font_check(text, *self.formats_used)
+        self.format_code = _build_code(*self.formats_used) 
         print(f"\033[{self.format_code}m{text}\033[0m")
     
     def overwrite(self, *new):
@@ -104,27 +129,6 @@ class Theme:
     def showUsed(self):
         print(self.formats_used)
 
-	# dunder methods
-	# note that you should enter only one string at once 
-	# using add/iadd/sub/isub,
-	# otherwise it wont work
-	
-    def __add__(self, *new):
-        self.add(*new)
-        return self
-    
-    def __sub__(self, *removed):
-        self.remove(*removed)
-        return self
-
-    def __iadd__(self, *new):
-        self.add(*new)
-        return self
-    
-    def __isub__(self, *removed):
-        self.remove(*removed)
-        return self
-
     def __str__(self):
         return str(self.formats_used)
 
@@ -133,38 +137,27 @@ class ThemeRGBV(Theme):
     def __init__(self, r="", g="", b="", r2="", g2="", b2="", *formats_used):
         super().__init__(*formats_used)
         
-        if r == "" or g == "" or b == "":
-            self.fg = ""
-        elif not r.isdigit() or not g.isdigit() or not b.isdigit():
-            self.fg = ""
-        else:
-            self.fg = ";".join([r,g,b])
-            
-        if r2 == "" or g2 == "" or b2 == "":
-            self.bg = ""
-        elif not r2.isdigit() or not g2.isdigit() or not b2.isdigit():
-            self.bg = ""
-        else:
-            self.bg = ";".join([r2,g2,b2])
+        self.fg = _rgb_validation(r,g,b)
+        self.bg = _rgb_validation(r2,g2,b2)
             
     def print(self, text):
-        text = check(text, *self.formats_used)
+        text = _font_check(text, *self.formats_used)
         if self.fg == "":
             if self.bg == "":
                 super().print(text)
             else:
-                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
+                self.format_code = _build_code(*self.formats_used)
                 self.rgbcode = "48;2;" + self.bg
                 self.finalcode = self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
         else:
             if self.bg == "":
-                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
+                self.format_code = _build_code(*self.formats_used)
                 self.rgbcode = "38;2;" + self.fg
                 self.finalcode =  self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
             else:
-                self.format_code = ";".join(name if name.isdigit() else formats.get(name) for name in self.formats_used if name.isdigit() or name in formats) 
+                self.format_code = _build_code(*self.formats_used)
                 self.rgbcode = "38;2;" + self.fg + ";48;2;" + self.bg
                 self.finalcode = self.format_code + ";" + self.rgbcode
                 print(f"\033[{self.finalcode}m{text}\033[0m")
@@ -172,35 +165,30 @@ class ThemeRGBV(Theme):
     def overwrite(self, r,g,b, r2,g2,b2, *new):
         super().overwrite(*new)
         
-        if r == "" or g == "" or b == "":
-            self.fg = ""
-        elif not r.isdigit() or not g.isdigit() or not b.isdigit():
-            self.fg = ""
-        else:
-            self.fg = ";".join([r,g,b])
-            
-        if r2 == "" or g2 == "" or b2 == "":
-            self.bg = ""
-        elif not r2.isdigit() or not g2.isdigit() or not b2.isdigit():
-            self.bg = ""
-        else:
-            self.bg = ";".join([r2,g2,b2])
+        self.fg = _rgb_validation(r,g,b)
+        self.bg = _rgb_validation(r2,g2,b2)
         
     def showUsed(self):
       print(f"Foreground: {self.fg}")
       print(f"Background: {self.bg}")
       print(f"Formats: {self.formats_used}")
 
+    def __str__(self):
+        return self.fg +";"+ self.bg +" "+ self.formats_used
+
 
 def printColored(text, *formats_used):
-    text = check(text, *formats_used)
-    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
+    text = _font_check(text, *formats_used)
+    code = _build_code(*formats_used)
     print(f"\033[{code}m{text}\033[0m")
 
 
-def colorGen(*formats_used):
-    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
-    return f"\033[{code}m"
+def colorGen(*formats_used, mode=""):
+    code = _build_code(*formats_used)
+    if mode == "b":
+        return code
+    else:
+        return f"\033[{code}m"
 
 # colorGen is the replacement of the legacy function
 # its WAYYY simpler, but takes alot of space to write
@@ -208,15 +196,23 @@ def colorGen(*formats_used):
 # now colorGen is also fixed
 
 
-
-def printl(text=(), formats_used=(), sepr=""):
+def printl(text=(), formats_used=(), *, sepr=""):
+    
     for i, (line, fformat) in enumerate(zip(text, formats_used)):
-        line = check(line, fformat)
+        code = []
+        line = _font_check(line, fformat)
         if type(fformat) == str:
-            code = (fformat if fformat.isdigit() else formats.get(fformat))
-        elif type(fformat) == tuple:
-            code = ";".join(name if name.isdigit() else formats.get(name) for name in fformat)
+            fformat = _single_code(fformat)
+            if fformat != None:
+                code.append(fformat)
 
+        elif type(fformat) == tuple:
+            for name in fformat:
+                name = _single_code(name)
+                if name != None:
+                    code.append(name)
+        
+        code = ";".join(code)
         if code == None:
             print(f"{line}\033[0m" + sepr, end="\n" if i == len(text) - 1 else "")
         else:
@@ -227,28 +223,41 @@ def printl(text=(), formats_used=(), sepr=""):
 # Dunno if i should keep colorGen, but ill just leave it there because
 # it returns the color code itself
 
-def printRGB(text, r,g,b, view, *formats_used):
-    text = check(text, *formats_used)
-    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
+def printRGB(text, r,g,b, *formats_used, view=""):
+    text = _font_check(text, *formats_used)
+    code = _build_code(*formats_used)    
     # if you dont want a format when using the rgb function,
     # you can just enter ""
-    rgbvalue = ";".join([r,g,b])
-    viewvalue = "48" if view.lower() == "bg" else "38"
-    if code == "0":
-        print(f"\033[{viewvalue};2;{rgbvalue}m{text}\033[0m")
+    rgbvalue = _rgb_validation(r,g,b)
+    if rgbvalue != "":
+        viewvalue = "48;" if view.lower() == "bg" else "38;"
     else:
-        print(f"\033[{viewvalue};2;{rgbvalue};{code}m{text}\033[0m")
+        viewvalue = ""
+
+    if code != "":
+        code += ";"
+    print(f"\033[{viewvalue}2;{rgbvalue}{code}m{text}\033[0m")
 
 def printRGBV(text, r,g,b, r2, g2, b2, *formats_used):
-    text = check(text, *formats_used)
-    code = ";".join(name if name.isdigit() else formats.get(name) for name in formats_used if name.isdigit() or name in formats) 
-        
-    fg = ";".join([r,g,b])
-    bg = ";".join([r2,g2,b2])
-    if code == "0":
-        print(f"\033[38;2;{fg};48;2;{bg}m{text}\033[0m")
+    text = _font_check(text, *formats_used)
+    code = _build_code(*formats_used)
+
+    fg = _rgb_validation(r,g,b)
+    bg = _rgb_validation(r2,g2,b2)
+    if code != "":
+        code += ";"
+
+    if fg == "":
+        if bg == "":
+            print(f"\033[{code}m{text}\033[0m")
+        else:
+            print(f"\033[{code}48;2;{bg}m{text}\033[0m")
     else:
-        print(f"\033[38;2;{fg};48;2;{bg};{code}m{text}\033[0m")
+        if bg == "":
+            print(f"\033[{code}38;2;{fg}m{text}\033[0m")
+        else:
+            print(f"\033[{code}38;2;{fg};48;2;{bg}m{text}\033[0m")
+        
 
 def formatfinder(min, max): # made this to find new formats, theres nothing beyond 107
     # btw use strings ("1","108") and not integers (1,108)
@@ -267,8 +276,9 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
            print(f"\033[{value}m{key}\033[0m")
 
 if __name__ == '__main__':
-    deco = Theme("green", "bold")
+    deco =  Theme("green", "bold")
     deco2 = Theme("bright_blue", "bold")
+    deco3 = Theme("bright_yellow")
     border = "--------------------------------"
     deco.print(border)
     
@@ -325,6 +335,7 @@ if __name__ == '__main__':
     input("Press enter to continue...")
 
 
+    # printl()
     deco.print(border)
     print("Page 3:")
     printl(("Example", "use", "of", "printl()"),("green", ("36", "italic"), "yellow", "magenta"), sepr=" ")
@@ -408,3 +419,20 @@ if __name__ == '__main__':
     deco2.print(border)
     print("Thanks for reading!")
     deco2.print(border)
+
+    deco3.print(border)
+    print("BONUS: Custom formats using either ANSI or RGB")
+    key = "placeholder"
+    while key.lower() != "_exit_":
+        key = input("Enter new key (_exit_ to leave): ")
+        if key.lower() != "_exit_":
+            custom_formats[key] = input(f"Enter a value for {key}: ")
+            while custom_formats[key].replace(";", "").isdigit() == False:
+                print("Invalid code!")
+                print("The code must have digits only (; is an exception)")
+                custom_formats[key] = input(f"Enter a value for {key}: ")
+        else:
+            break
+    with open("custom.json", "w") as file:
+        json.dump(custom_formats, file, indent=4)
+    deco3.print(border)
