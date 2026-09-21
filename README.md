@@ -14,6 +14,8 @@ Using ANSI formats in a dictionary to format text, with currently 39 formats
 
 too lazy to update readme
 
+Current version: 2.0.1
+
 List of functions and classes:
 
 - Formats Dictionary: Containing ANSI codes to format text.
@@ -54,11 +56,7 @@ Terminals that i know do not support ANSI formatting:
 
 # *How to use in your code?*
 
-Simply download the .py, put it in your work space, and import it like this:
-
-    from printColored import *
-
-other methods for installation later
+    pip install printColored
 
 ----------------------
 
