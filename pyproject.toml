@@ -1,0 +1,8 @@
+[project]
+name = "printcolored"
+version = "2.0.1"
+dependencies = ["platformdirs"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
