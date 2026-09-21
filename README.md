@@ -14,6 +14,8 @@ Using ANSI formats in a dictionary to format text, with currently 39 formats
 
 too lazy to update readme
 
+WARNING: THE README IS MOSTLY OUTDATED DUE TO ME BEING TOO LAZY TO UPDATE IT
+
 Current version: 2.0.1
 
 List of functions and classes:
@@ -42,11 +44,13 @@ List of functions and classes:
 
 Be aware that the terminal you use may or may not support the formats, I use VSCode and it works fine.
 
+Some terminals can be fixed by installing Colorama. Marked by C in the list below
+
 Terminals that i know do not support ANSI formatting:
 
-- Command prompt
+- Command prompt (C)
 
-- Running the script directly through python
+- Running the script directly through python (C)
 
 - Probably most online web editors
 
