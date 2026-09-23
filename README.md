@@ -16,7 +16,7 @@ too lazy to update readme
 
 WARNING: THE README IS MOSTLY OUTDATED DUE TO ME BEING TOO LAZY TO UPDATE IT
 
-Current version: 2.0.1
+Current version: 2.1.1
 
 List of functions and classes:
 
@@ -44,7 +44,7 @@ List of functions and classes:
 
 Be aware that the terminal you use may or may not support the formats, I use VSCode and it works fine.
 
-Some terminals can be fixed by installing Colorama. Marked by C in the list below
+On Windows 7/8, you'll need to install colorama for some terminals to work. Otherwise you dont need
 
 Terminals that i know do not support ANSI formatting:
 
