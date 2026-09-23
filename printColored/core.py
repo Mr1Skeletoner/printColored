@@ -3,12 +3,27 @@
 """
 
 
+
 try:
     from colorama import just_fix_windows_console
     just_fix_windows_console()
 except ImportError:
-    print("Colorama module not found, printColored will not work on CMD!")
+    # if youre on an older Windows version (7/8) and colors don't show up, run: pip install colorama
+    import sys
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            kernel32 = ctypes.windll.kernel32
+            STD_OUTPUT_HANDLE = -11
+            ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
 
+            handle = kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+            mode = ctypes.c_uint32()
+            if kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
+                kernel32.SetConsoleMode(handle, mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+        except Exception:
+            pass
+    
 
 from pathlib import Path
 import json
@@ -273,8 +288,15 @@ def formatfinder(min, max): # made this to find new formats, theres nothing beyo
     elif min == "font" or max == "font":
         for key, value in Fonter.fonts.items():
             print(f"{key}: {value}")
+    elif min == "decors" or max == "decors":
         for key, value in Fonter.decorators.items():
             print(f"{key}: {value}")
-    else:
+    elif min == "ansi_dict" or max == "ansi_dict":
         for key, value in ansi_formats.items():
+           print(f"\033[{value}m{key}\033[0m")
+    elif min == "html_dict" or max == "html_dict":
+        for key, value in html_colors.items():
+           print(f"\033[38;2;{value}m{key}\033[0m")
+    elif min == "custom_dict" or max == "custom_dict":
+        for key, value in custom_formats.items():
            print(f"\033[{value}m{key}\033[0m")
