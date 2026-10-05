@@ -1,12 +1,13 @@
+from collections.abc import Callable
 from .core import *
 
-_deco = Theme("green", "bold")
-_deco2 = Theme("bright_blue", "bold")
-_deco3 = Theme("bright_yellow")
-_border = "--------------------------------"
+_deco: Theme = Theme("green", "bold")
+_deco2: Theme = Theme("bright_blue", "bold")
+_deco3: Theme = Theme("bright_yellow")
+_border: str = "--------------------------------"
 
 
-def _guide_printColored():
+def _guide_printColored() -> None:
     _deco.print(_border)
     print("printColored()")
     printColored("Example use of printColored()".center(32), "green", "bold", "italic")
@@ -15,7 +16,7 @@ def _guide_printColored():
     _deco.print(_border)
 
 
-def _guide_colorGen():
+def _guide_colorGen() -> None:
     _deco.print(_border)
     print("colorGen()")
     print(
@@ -31,7 +32,7 @@ def _guide_colorGen():
     _deco.print(_border)
 
 
-def _guide_printl():
+def _guide_printl() -> None:
     _deco.print(_border)
     print("printl()")
     printl(("Example", "use", "of", "printl()"), ("green", ("36", "italic"), "yellow", "magenta"), sepr=" ")
@@ -39,7 +40,7 @@ def _guide_printl():
     _deco.print(_border)
 
 
-def _guide_printRGB():
+def _guide_printRGB() -> None:
     _deco.print(_border)
     print("printRGB()")
     printRGB("Example use of printRGB()".center(32), "255", "0", "255", "bold", view="")
@@ -50,7 +51,7 @@ def _guide_printRGB():
     _deco.print(_border)
 
 
-def _guide_printRGBV():
+def _guide_printRGBV() -> None:
     _deco.print(_border)
     print("printRGBV()")
     printRGBV("Example use of printRGBV()".center(32), "0", "255", "0", "0", "0", "255", "")
@@ -62,7 +63,7 @@ def _guide_printRGBV():
     _deco.print(_border)
 
 
-def _guide_theme():
+def _guide_theme() -> None:
     _deco.print(_border)
     print("Theme")
     deadly = Theme("brightred", "double_underline", "bold")
@@ -83,7 +84,7 @@ def _guide_theme():
     _deco.print(_border)
 
 
-def _guide_theme_rgbv():
+def _guide_theme_rgbv() -> None:
     _deco.print(_border)
     print("ThemeRGBV")
     classified = ThemeRGBV("255", "255", "255", "0", "0", "0", "")
@@ -107,7 +108,7 @@ def _guide_theme_rgbv():
     _deco.print(_border)
 
 
-GUIDE = {
+GUIDE: dict[str, Callable[[], None]] = {
     "printColored": _guide_printColored,
     "colorGen": _guide_colorGen,
     "printl": _guide_printl,
@@ -118,7 +119,7 @@ GUIDE = {
 }
 
 
-def func_guide(selected_function=None):
+def func_guide(selected_function: str | None = None) -> None:
     if selected_function:
         if selected_function in GUIDE:
             GUIDE[selected_function]()

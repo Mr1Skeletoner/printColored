@@ -1,30 +1,31 @@
+from collections.abc import Callable
 from .core import formatfinder
 
-def ansi_range():
+def ansi_range() -> None:
     print("All possible formats in range of 1-107:")
     formatfinder("1","107")
 
-def all_ansi_dict_formats():
+def all_ansi_dict_formats() -> None:
     print("All available formats:")
     formatfinder("ansi_dict","")
 
-def all_html_formats():
+def all_html_formats() -> None:
     print("All HTML formats:")
     formatfinder("html_dict","")
 
-def all_custom_formats():
+def all_custom_formats() -> None:
     print("All custom formats:")
     formatfinder("custom_dict","")
 
-def all_fonts():
+def all_fonts() -> None:
     print("All fonts available:")
     formatfinder(" ","font")
 
-def all_decors():
+def all_decors() -> None:
     print("All decorators available:")
     formatfinder(" ","decors")
 
-display = {
+display: dict[str, Callable[[], None]] = {
     "all_ansi_formats": ansi_range,
     "ansi_dict":        all_ansi_dict_formats,
     "html_dict":        all_html_formats,
@@ -34,7 +35,7 @@ display = {
 }
 
 
-def display_formats(selected_source=None):
+def display_formats(selected_source: str | None = None) -> None:
     if selected_source:
         if selected_source in display:
             display[selected_source]()

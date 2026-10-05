@@ -1,4 +1,4 @@
-ansi_formats = { # i think the dictonary now contains every possible format
+ansi_formats: dict[str, str] = { # i think the dictonary now contains every possible format
     # Colors 
     "gray"   : "30",
     "red"    : "31",
@@ -55,7 +55,7 @@ ansi_formats = { # i think the dictonary now contains every possible format
     ""     : "0"
 }
 
-html_colors = { # note that just like normal rgb, using two at same time,
+html_colors: dict[str, str] = { # note that just like normal rgb, using two at same time,
     # the last overwrites all before it.
     # also note that the format keys are written in a different way
     # than i write bc it was copypasted from html website
@@ -71,8 +71,6 @@ html_colors = { # note that just like normal rgb, using two at same time,
     "Pink": "255;192;203",
     "LightPink": "255;182;193",
     "HotPink": "255;105;180", 
-    # ^ i am NOT the one in charge of writing these
-    # ᵇᵘᵗ ⁱ ᵃᶜᵗᵘᵃˡˡʸ ᵗʰⁱⁿᵏ ᵗʰᵃᵗ ᵗʰⁱˢ ᵖⁱⁿᵏ ⁱˢ ᵃᵇⁱᵗ ʰ⁻
     "DeepPink": "255;20;147",
     "MediumVioletRed": "199;21;133",
     "PaleVioletRed": "219;112;147",

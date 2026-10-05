@@ -29,39 +29,39 @@ from pathlib import Path
 import json
 from platformdirs import user_config_dir
 
-CONFIG_DIR = Path(user_config_dir("printColored"))
-CUSTOM_FORMATS_PATH = CONFIG_DIR / "custom.json"
+CONFIG_DIR: Path = Path(user_config_dir("printColored"))
+CUSTOM_FORMATS_PATH: Path = CONFIG_DIR / "custom.json"
 
 
-def load_custom_formats():
+def load_custom_formats() -> dict[str, str]:
     if CUSTOM_FORMATS_PATH.exists():
         with open(CUSTOM_FORMATS_PATH, "r") as file:
             return json.load(file)
     return {}
 
 
-def save_custom_formats(formats):
+def save_custom_formats(formats: dict[str, str]) -> None:
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with open(CUSTOM_FORMATS_PATH, "w") as file:
         json.dump(formats, file, indent=4)
 
 
-def add_custom_format(name, value):
-    formats = load_custom_formats()
-    formats[name] = value
-    save_custom_formats(formats)
-    return formats
+def add_custom_format(name: str, value: str) -> dict[str, str]:
+    global custom_formats
+    custom_formats[name] = value
+    save_custom_formats(custom_formats)
+    return custom_formats
 
 
-custom_formats = load_custom_formats()
+custom_formats: dict[str, str] = load_custom_formats()
 
 
 from . import Fonter
 from .formats import ansi_formats, html_colors
 
-_default_source_order = ("ansi_format","rgb_format","custom_format")
+_default_source_order: tuple[str, ...] = ("ansi_format","rgb_format","custom_format")
 
-def _font_check(text, *inputs):
+def _font_check(text: str, *inputs: str) -> str:
     changed = False
     font = ""
     decorator = ""
@@ -74,13 +74,13 @@ def _font_check(text, *inputs):
             changed = True
     return Fonter.Fonter(text, font, decorator) if changed == True else text 
 
-def _reset(reset):
+def _reset(reset: bool) -> str:
     if reset:
         return "\033[0m"
     else: 
         return ""
 
-def _single_code(fformat, *, html_view="", source_order=()):
+def _single_code(fformat: str, *, html_view: str = "", source_order: tuple[str, ...] = ()) -> str:
     if fformat.replace(";", "").isdigit():
         return fformat
     for source in source_order:
@@ -97,8 +97,8 @@ def _single_code(fformat, *, html_view="", source_order=()):
             raise ValueError(f"{source}: Unknown Format Source!")
     raise ValueError(f"{fformat}: Unknown Format!")
     
-def _build_code(*formats_used, html_view="", source_order=()):
-    code_list = []
+def _build_code(*formats_used: str, html_view: str = "", source_order: tuple[str, ...] = ()) -> str:
+    code_list: list[str] = []
     for name in formats_used:
         name = _single_code(name, html_view=html_view, source_order=source_order)
         if name != None: 
@@ -106,7 +106,7 @@ def _build_code(*formats_used, html_view="", source_order=()):
         
     return ";".join(code_list)
 
-def _rgb_validation(r,g,b):
+def _rgb_validation(r: str, g: str, b: str) -> str:
     if r == "" and g == "" and b == "":
         return ""
     elif r == "" or g == "" or b == "":
@@ -119,42 +119,42 @@ def _rgb_validation(r,g,b):
 
 
 class Theme:
-    def __init__(self, *formats_used):
-        self.formats_used = formats_used
+    def __init__(self, *formats_used: str) -> None:
+        self.formats_used: tuple[str, ...] = formats_used
     
-    def print(self, text, *, reset=True, html_view="", source_order=_default_source_order):
+    def print(self, text: str, *, reset: bool = True, html_view: str = "", source_order: tuple[str, ...] = _default_source_order) -> None:
         text = _font_check(text, *self.formats_used)
-        self.format_code = _build_code(*self.formats_used, html_view=html_view, source_order=source_order) 
-        reset = _reset(reset)
-        print(f"\033[{self.format_code}m{text}{reset}")
+        self.format_code: str = _build_code(*self.formats_used, html_view=html_view, source_order=source_order) 
+        reset_code = _reset(reset)
+        print(f"\033[{self.format_code}m{text}{reset_code}")
     
-    def overwrite(self, *new):
+    def overwrite(self, *new: str) -> None:
         self.formats_used = new
     
-    def add(self, *new):
+    def add(self, *new: str) -> None:
         self.formats_used = self.formats_used + new
 
-    def remove(self, *removed):
+    def remove(self, *removed: str) -> None:
         self.formats_used = tuple(fformat for fformat in self.formats_used if fformat not in removed)
     
-    def showUsed(self):
+    def showUsed(self) -> None:
         print(self.formats_used)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.formats_used)
 
 
 class ThemeRGBV(Theme):
-    def __init__(self, r="", g="", b="", r2="", g2="", b2="", *formats_used):
+    def __init__(self, r: str = "", g: str = "", b: str = "", r2: str = "", g2: str = "", b2: str = "", *formats_used: str) -> None:
         super().__init__(*formats_used)
         
-        self.fg = _rgb_validation(r,g,b)
-        self.bg = _rgb_validation(r2,g2,b2)
+        self.fg: str = _rgb_validation(r,g,b)
+        self.bg: str = _rgb_validation(r2,g2,b2)
             
-    def print(self, text, *, reset=True, html_view="", source_order=_default_source_order):
+    def print(self, text: str, *, reset: bool = True, html_view: str = "", source_order: tuple[str, ...] = _default_source_order) -> None:
         text = _font_check(text, *self.formats_used)
         self.format_code = _build_code(*self.formats_used, html_view=html_view, source_order=source_order)
-        reset = _reset(reset)
+        reset_code = _reset(reset)
 
         if self.format_code:
             self.format_code += ";"
@@ -163,43 +163,43 @@ class ThemeRGBV(Theme):
             if self.bg == "":
                 super().print(text, reset=reset, html_view=html_view, source_order=source_order)
             else:
-                self.rgbcode = "48;2;" + self.bg
-                self.finalcode = self.format_code + self.rgbcode
-                print(f"\033[{self.finalcode}m{text}{reset}")
+                self.rgbcode: str = "48;2;" + self.bg
+                self.finalcode: str = self.format_code + self.rgbcode
+                print(f"\033[{self.finalcode}m{text}{reset_code}")
         else:
             if self.bg == "":
                 self.rgbcode = "38;2;" + self.fg
                 self.finalcode = self.format_code + self.rgbcode
-                print(f"\033[{self.finalcode}m{text}{reset}")
+                print(f"\033[{self.finalcode}m{text}{reset_code}")
             else:
                 self.rgbcode = "38;2;" + self.fg + ";48;2;" + self.bg
                 self.finalcode = self.format_code + self.rgbcode
-                print(f"\033[{self.finalcode}m{text}{reset}")
+                print(f"\033[{self.finalcode}m{text}{reset_code}")
     
-    def overwrite(self, r,g,b, r2,g2,b2, *new):
+    def overwrite(self, r: str, g: str, b: str, r2: str, g2: str, b2: str, *new: str) -> None:
         super().overwrite(*new)
         
         self.fg = _rgb_validation(r,g,b)
         self.bg = _rgb_validation(r2,g2,b2)
         
-    def showUsed(self):
+    def showUsed(self) -> None:
       print(f"Foreground: {self.fg}")
       print(f"Background: {self.bg}")
       print(f"Formats: {self.formats_used}")
 
-    def __str__(self):
-        return self.fg +";"+ self.bg +" "+ self.formats_used
+    def __str__(self) -> str:
+        return self.fg +";"+ self.bg +" "+ str(self.formats_used)
 
 
-def printColored(text, *formats_used, reset= True, html_view="", source_order=_default_source_order):
+def printColored(text: str, *formats_used: str, reset: bool = True, html_view: str = "", source_order: tuple[str, ...] = _default_source_order) -> None:
     text = _font_check(text, *formats_used)
     code = _build_code(*formats_used, html_view=html_view, source_order=source_order)        
-    reset = _reset(reset)
+    reset_code = _reset(reset)
 
-    print(f"\033[{code}m{text}{reset}")
+    print(f"\033[{code}m{text}{reset_code}")
 
 
-def colorGen(*formats_used, mode="", html_view="", source_order=_default_source_order):
+def colorGen(*formats_used: str, mode: str = "", html_view: str = "", source_order: tuple[str, ...] = _default_source_order) -> str:
     code = _build_code(*formats_used, html_view=html_view, source_order=source_order)
     if mode == "b":
         return code
@@ -212,10 +212,10 @@ def colorGen(*formats_used, mode="", html_view="", source_order=_default_source_
 # now colorGen is also fixed
 
 
-def printl(text=(), formats_used=(), *, sepr=""):
+def printl(text: tuple[str, ...] = (), formats_used: tuple[str | tuple[str, ...], ...] = (), *, sepr: str = "") -> None:
     
     for i, (line, fformat) in enumerate(zip(text, formats_used)):
-        code = []
+        code: list[str] = []
         line = _font_check(line, fformat)
         if type(fformat) == str:
             fformat = _single_code(fformat)
@@ -236,10 +236,10 @@ def printl(text=(), formats_used=(), *, sepr=""):
 # Dunno if i should keep colorGen, but ill just leave it there because
 # it returns the color code itself
 
-def printRGB(text, r,g,b, *formats_used, view="", html_view="",reset=True, source_order=_default_source_order):
+def printRGB(text: str, r: str, g: str, b: str, *formats_used: str, view: str = "", html_view: str = "", reset: bool = True, source_order: tuple[str, ...] = _default_source_order) -> None:
     text = _font_check(text, *formats_used)
     code = _build_code(*formats_used, html_view=html_view, source_order=source_order)
-    reset = _reset(reset)    
+    reset_code = _reset(reset)    
     # if you dont want a format when using the rgb function,
     # you can just not enter it
     rgbvalue = _rgb_validation(r,g,b)
@@ -252,13 +252,13 @@ def printRGB(text, r,g,b, *formats_used, view="", html_view="",reset=True, sourc
         code = ";" + code
 
 
-    print(f"\033[{viewvalue}2;{rgbvalue}{code}m{text}{reset}")
+    print(f"\033[{viewvalue}2;{rgbvalue}{code}m{text}{reset_code}")
 
 
-def printRGBV(text, r,g,b, r2, g2, b2, *formats_used, reset=True, html_view="", source_order=_default_source_order):
+def printRGBV(text: str, r: str, g: str, b: str, r2: str, g2: str, b2: str, *formats_used: str, reset: bool = True, html_view: str = "", source_order: tuple[str, ...] = _default_source_order) -> None:
     text = _font_check(text, *formats_used)
     code = _build_code(*formats_used, html_view=html_view, source_order=source_order)
-    reset = _reset(reset)
+    reset_code = _reset(reset)
 
     fg = _rgb_validation(r,g,b)
     bg = _rgb_validation(r2,g2,b2)
@@ -268,35 +268,35 @@ def printRGBV(text, r,g,b, r2, g2, b2, *formats_used, reset=True, html_view="", 
 
     if fg == "":
         if bg == "":
-            print(f"\033[{code}m{text}{reset}")
+            print(f"\033[{code}m{text}{reset_code}")
         else:
-            print(f"\033[{code}48;2;{bg}m{text}{reset}")
+            print(f"\033[{code}48;2;{bg}m{text}{reset_code}")
     else:
         if bg == "":
-            print(f"\033[{code}38;2;{fg}m{text}{reset}")
+            print(f"\033[{code}38;2;{fg}m{text}{reset_code}")
         else:
-            print(f"\033[{code}38;2;{fg};48;2;{bg}m{text}{reset}")
+            print(f"\033[{code}38;2;{fg};48;2;{bg}m{text}{reset_code}")
         
 
-def formatfinder(min, max): # made this to find new formats, theres nothing beyond 107
+def formatfinder(val1: str, val2: str) -> None: # made this to find new formats, theres nothing beyond 107
     # btw use strings ("1","108") and not integers (1,108)
-    if min.isdigit() and max.isdigit():
-        min = int(min)
-        max = int(max)
-        for code in range(min, max+1):
+    if val1.isdigit() and val2.isdigit():
+        num1 = int(val1)
+        num2 = int(val2)
+        for code in range(num1, num2+1):
             print(f"At iteration {code}: \033[{code}mHello World!\033[0m")
-    elif min == "font" or max == "font":
+    elif val1 == "font" or val2 == "font":
         for key, value in Fonter.fonts.items():
             print(f"{key}: {value}")
-    elif min == "decors" or max == "decors":
+    elif val1 == "decors" or val2 == "decors":
         for key, value in Fonter.decorators.items():
             print(f"{key}: {value}")
-    elif min == "ansi_dict" or max == "ansi_dict":
+    elif val1 == "ansi_dict" or val2 == "ansi_dict":
         for key, value in ansi_formats.items():
            print(f"\033[{value}m{key}\033[0m")
-    elif min == "html_dict" or max == "html_dict":
+    elif val1 == "html_dict" or val2 == "html_dict":
         for key, value in html_colors.items():
            print(f"\033[38;2;{value}m{key}\033[0m")
-    elif min == "custom_dict" or max == "custom_dict":
+    elif val1 == "custom_dict" or val2 == "custom_dict":
         for key, value in custom_formats.items():
            print(f"\033[{value}m{key}\033[0m")
