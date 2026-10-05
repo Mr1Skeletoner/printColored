@@ -16,7 +16,7 @@ too lazy to update readme
 
 WARNING: THE README IS MOSTLY OUTDATED DUE TO ME BEING TOO LAZY TO UPDATE IT
 
-Current version: 2.1.1
+Current version: 2.2
 
 List of functions and classes:
 
