@@ -1,4 +1,7 @@
-ansi_formats: dict[str, str] = { # i think the dictonary now contains every possible format
+from .FD import frozendict
+
+ansi_formats: frozendict[dict[str, str]] = frozendict({ 
+    # i think the dictonary now contains every possible format
     # Colors 
     "gray"   : "30",
     "red"    : "31",
@@ -53,9 +56,10 @@ ansi_formats: dict[str, str] = { # i think the dictonary now contains every poss
 
     "reset": "0", # placeholder or smth idk i dont even use it bc u can just type 0 but i will just keep it there
     ""     : "0"
-}
+})
 
-html_colors: dict[str, str] = { # note that just like normal rgb, using two at same time,
+html_colors: frozendict[dict[str, str]] = frozendict({ 
+    # note that just like normal rgb, using two at same time,
     # the last overwrites all before it.
     # also note that the format keys are written in a different way
     # than i write bc it was copypasted from html website
@@ -200,4 +204,4 @@ html_colors: dict[str, str] = { # note that just like normal rgb, using two at s
     "SlateGray": "112;128;144",
     "DarkSlateGray": "47;79;79",
     "Black": "0;0;0",
-}
+})

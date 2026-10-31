@@ -1,10 +1,11 @@
 [project]
 name = "printcolored"
-version = "2.2"
+version = "2.3.3"
 dependencies = ["platformdirs"]
 
 [project.optional-dependencies]
 windows-legacy = ["colorama"]
+immutable-dict-old-python = ["frozendict"]
 
 [build-system]
 requires = ["setuptools"]
