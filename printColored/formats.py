@@ -1,4 +1,4 @@
-from .FD import frozendict
+from .frozen_dict import frozendict
 
 ansi_formats: frozendict[dict[str, str]] = frozendict({ 
     # i think the dictonary now contains every possible format
